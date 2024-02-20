@@ -1,0 +1,25 @@
+{
+	"name": "mylps",
+	"version": "1.0.0",
+	"description": "Web app to visualize my LP collection",
+	"main": "index.js",
+	"type": "module",
+	"scripts": {
+		"start": "node server/index.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/DrJP99/myLPs.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/DrJP99/myLPs/issues"
+	},
+	"homepage": "https://github.com/DrJP99/myLPs#readme",
+	"dependencies": {
+		"express": "^4.18.2"
+	}
+}
