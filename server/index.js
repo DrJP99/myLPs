@@ -1,12 +1,7 @@
-import express from "express";
+const app = require("./app");
+const ENV_PORT = require("./utils/config").PORT;
 
-const PORT = process.env.PORT || 3001;
-
-const app = express();
-
-app.get("/api", (req, res) => {
-	res.json({ message: "Hello world!!" });
-});
+const PORT = ENV_PORT || 3001;
 
 app.listen(PORT, () => {
 	console.log(`Server listening on ${PORT}`);
