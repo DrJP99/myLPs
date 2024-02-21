@@ -1,10 +1,21 @@
-import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { create } from '../services/albums';
+import { useNavigate } from 'react-router';
+import { getAll } from '../services/artists';
 
-const AlbumForm = ({ handleAddAlbum }) => {
+const AlbumForm = () => {
 	const [title, setTitle] = useState('');
 	const [artist, setArtist] = useState('');
+	const [allArtists, setAllArtists] = useState([]);
 	const [year, setYear] = useState('');
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		getAll().then((data) => {
+			let a = data.map((artist) => artist.name);
+			setAllArtists(a);
+		});
+	}, []);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -13,12 +24,10 @@ const AlbumForm = ({ handleAddAlbum }) => {
 			artist: artist,
 			year: year,
 		};
-		console.log('new album', newAlbum);
-		const res = await axios.post('/api/records', newAlbum);
-		handleAddAlbum(res.data);
-		setTitle('');
-		setArtist('');
-		setYear('');
+
+		create(newAlbum).then((data) => {
+			navigate('/album/' + data.id);
+		});
 	};
 
 	return (
@@ -35,13 +44,21 @@ const AlbumForm = ({ handleAddAlbum }) => {
 				/>
 				<br />
 				<label htmlFor="artist">Artist</label>
-				<input
+				<select
+					value={artist}
+					onChange={({ target }) => setArtist(target.value)}
+				>
+					{allArtists.map((artist) => (
+						<option key={artist}>{artist}</option>
+					))}
+				</select>
+				{/* <input
 					type="text"
 					value={artist}
 					id="artist"
 					name="artist"
 					onChange={({ target }) => setArtist(target.value)}
-				/>
+				/> */}
 				<br />
 				<label htmlFor="year">Year</label>
 				<input

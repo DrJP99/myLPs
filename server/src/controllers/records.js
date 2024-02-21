@@ -11,6 +11,14 @@ recordsRouter.get('/', async (req, res) => {
 	res.json(records);
 });
 
+recordsRouter.get('/:id', async (req, res) => {
+	const record = await Record.findById(req.params.id).populate('artist', {
+		name: 1,
+		origin: 1,
+	});
+	res.json(record);
+});
+
 recordsRouter.post('/', async (req, res) => {
 	const { title, artist, year, cover, genre, spotifyId } = req.body;
 

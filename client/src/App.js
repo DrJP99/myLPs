@@ -2,55 +2,32 @@ import React from 'react';
 import { imagefrombuffer } from 'imagefrombuffer';
 import AlbumForm from './components/AlbumForm';
 import axios from 'axios';
+import {
+	BrowserRouter,
+	Routes,
+	Route,
+	NavLink,
+	Navigate,
+} from 'react-router-dom';
+import Albums from './components/Albums';
+import Album from './components/Album';
+import NavBar from './components/NavBar';
+import ArtistForm from './components/ArtistForm';
+import Artist from './components/Artist';
 
 function App() {
-	const [albumData, setAlbumData] = React.useState([]);
-
-	React.useEffect(() => {
-		fetch('/api/records')
-			.then((res) => res.json())
-			.then((data) => setAlbumData(data));
-	}, []);
-
-	const handleAddAlbum = (newAlbum) => {
-		setAlbumData(albumData.concat(newAlbum));
-	};
-
-	const handleDeleteAlbum = async (albumToDelete) => {
-		setAlbumData(
-			albumData.filter((album) => album.id !== albumToDelete.id),
-		);
-
-		await axios.delete(`/api/records/${albumToDelete.id}`);
-	};
-
-	console.log('ALBUM DATA main', albumData);
 	return (
 		<div className="App">
-			<header className="App-header">
-				<h1>My Albums</h1>
-			</header>
-			<ul>
-				{albumData &&
-					albumData.map((album) => (
-						<li key={album.id}>
-							{album.title} - {album.year} ({album.artist.name})
-							{/* {album.cover && (
-								<img
-									src={imagefrombuffer({
-										type: album.cover?.contentType,
-										data: album.cover?.data?.data,
-									})}
-									alt={album.title}
-								/>
-							)} */}
-							<button onClick={() => handleDeleteAlbum(album)}>
-								Delete{' '}
-							</button>
-						</li>
-					))}
-			</ul>
-			<AlbumForm handleAddAlbum={handleAddAlbum} />
+			<NavBar />
+			<Routes>
+				<Route path="/" element={<Albums />} />
+				<Route path="/album/:id" element={<Album />} />
+				<Route path="/album" element={<Navigate to="/" />} />
+				<Route path="/add/album" element={<AlbumForm />} />
+				<Route path="/add" element={<Navigate to="/add/album" />} />
+				<Route path="/add/artist" element={<ArtistForm />} />
+				<Route path="/artist/:id" element={<Artist />} />
+			</Routes>
 		</div>
 	);
 }
