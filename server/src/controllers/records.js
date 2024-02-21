@@ -21,8 +21,10 @@ recordsRouter.post('/', async (req, res) => {
 
 	let myCover = null;
 	if (cover) {
+		let img = fs.readFileSync(cover.path);
+		let encode_img = img.toString('base64');
 		myCover = {
-			data: fs.readFileSync(cover.path),
+			data: new Buffer.from(encode_img, 'base64'),
 			contentType: 'image/png',
 		};
 	}
@@ -41,7 +43,12 @@ recordsRouter.post('/', async (req, res) => {
 
 	const savedRecord = await newRecord.save();
 
-	res.status(201).json(savedRecord);
+	res.status(201).json(
+		await savedRecord.populate('artist', {
+			name: 1,
+			origin: 1,
+		}),
+	);
 });
 
 module.exports = recordsRouter;
