@@ -1,6 +1,7 @@
 import React from 'react';
 import { imagefrombuffer } from 'imagefrombuffer';
 import AlbumForm from './components/AlbumForm';
+import axios from 'axios';
 
 function App() {
 	const [albumData, setAlbumData] = React.useState([]);
@@ -13,6 +14,14 @@ function App() {
 
 	const handleAddAlbum = (newAlbum) => {
 		setAlbumData(albumData.concat(newAlbum));
+	};
+
+	const handleDeleteAlbum = async (albumToDelete) => {
+		setAlbumData(
+			albumData.filter((album) => album.id !== albumToDelete.id),
+		);
+
+		await axios.delete(`/api/records/${albumToDelete.id}`);
 	};
 
 	console.log('ALBUM DATA main', albumData);
@@ -35,6 +44,9 @@ function App() {
 									alt={album.title}
 								/>
 							)} */}
+							<button onClick={() => handleDeleteAlbum(album)}>
+								Delete{' '}
+							</button>
 						</li>
 					))}
 			</ul>

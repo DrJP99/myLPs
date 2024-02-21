@@ -51,4 +51,11 @@ recordsRouter.post('/', async (req, res) => {
 	);
 });
 
+recordsRouter.delete('/:id', async (req, res) => {
+	const record = await Record.findById(req.params.id);
+
+	await Record.findByIdAndDelete(req.params.id);
+	res.status(204).end();
+});
+
 module.exports = recordsRouter;
