@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const recordSchema = new mongoose.Schema({
 	title: {
@@ -9,9 +9,13 @@ const recordSchema = new mongoose.Schema({
 		type: Number,
 		required: true,
 	},
+	cover: {
+		data: Buffer,
+		contentType: String,
+	},
 	artist: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: "Artist",
+		ref: 'Artist',
 		required: true,
 	},
 	comment: {
@@ -24,7 +28,7 @@ const recordSchema = new mongoose.Schema({
 	},
 });
 
-recordSchema.set("toJSON", {
+recordSchema.set('toJSON', {
 	transform: (document, returnedObject) => {
 		returnedObject.id = returnedObject._id.toString();
 		delete returnedObject._id;
@@ -32,4 +36,4 @@ recordSchema.set("toJSON", {
 	},
 });
 
-module.exports = mongoose.model("Record", recordSchema);
+module.exports = mongoose.model('Record', recordSchema);

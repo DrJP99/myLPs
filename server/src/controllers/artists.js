@@ -1,13 +1,13 @@
-const artistsRouter = require("express").Router();
-const Artist = require("../models/artist");
+const artistsRouter = require('express').Router();
+const Artist = require('../models/artist');
 
-artistsRouter.get("/", async (req, res) => {
+artistsRouter.get('/', async (req, res) => {
 	const artists = await Artist.find({});
 	res.json(artists);
 });
 
-artistsRouter.get("/:id", async (req, res) => {
-	const artist = await Artist.findById(req.params.id).populate("records", {
+artistsRouter.get('/:id', async (req, res) => {
+	const artist = await Artist.findById(req.params.id).populate('records', {
 		title: 1,
 		year: 1,
 		genre: 1,
@@ -19,7 +19,7 @@ artistsRouter.get("/:id", async (req, res) => {
 	}
 });
 
-artistsRouter.post("/", async (req, res) => {
+artistsRouter.post('/', async (req, res) => {
 	const { name, origin, desc, spotifyId } = req.body;
 
 	const newArtist = new Artist({

@@ -1,22 +1,27 @@
-import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import React from 'react';
 
 function App() {
-	const [data, setData] = React.useState(null);
+	const [albumData, setAlbumData] = React.useState(null);
 
 	React.useEffect(() => {
-		fetch("/api")
+		fetch('/api/records')
 			.then((res) => res.json())
-			.then((data) => setData(data.message));
+			.then((data) => setAlbumData(data));
 	}, []);
 
 	return (
 		<div className="App">
 			<header className="App-header">
-				<img src={logo} className="App-logo" alt="logo" />
-				<p>{!data ? "Loading..." : data}</p>
+				<h1>My Albums</h1>
 			</header>
+			<ul>
+				{albumData &&
+					albumData.map((album) => (
+						<li key={album.id}>
+							{album.title} - {album.year} ({album.artist.name})
+						</li>
+					))}
+			</ul>
 		</div>
 	);
 }
