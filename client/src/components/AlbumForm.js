@@ -14,6 +14,7 @@ const AlbumForm = () => {
 		getAll().then((data) => {
 			let a = data.map((artist) => artist.name);
 			setAllArtists(a);
+			setArtist(a[0]);
 		});
 	}, []);
 
@@ -25,9 +26,13 @@ const AlbumForm = () => {
 			year: year,
 		};
 
-		create(newAlbum).then((data) => {
-			navigate('/album/' + data.id);
-		});
+		create(newAlbum)
+			.then((data) => {
+				navigate('/album/' + data.id);
+			})
+			.catch((error) => {
+				console.log(error.message);
+			});
 	};
 
 	return (
@@ -48,17 +53,10 @@ const AlbumForm = () => {
 					value={artist}
 					onChange={({ target }) => setArtist(target.value)}
 				>
-					{allArtists.map((artist) => (
+					{allArtists.map((artist, i) => (
 						<option key={artist}>{artist}</option>
 					))}
 				</select>
-				{/* <input
-					type="text"
-					value={artist}
-					id="artist"
-					name="artist"
-					onChange={({ target }) => setArtist(target.value)}
-				/> */}
 				<br />
 				<label htmlFor="year">Year</label>
 				<input

@@ -16,9 +16,13 @@ const ArtistForm = () => {
 			desc: desc,
 		};
 
-		create(newArtist).then((data) => {
-			navigate('/artist/' + data.id);
-		});
+		create(newArtist)
+			.then((data) => {
+				navigate('/artist/' + data.id);
+			})
+			.catch((error) => {
+				console.log(error.message);
+			});
 	};
 
 	return (
