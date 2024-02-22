@@ -1,10 +1,14 @@
 import { useState } from 'react';
 import { login } from '../services/login';
-import { setUserData } from '../services/users';
+// import { setUserData } from '../services/users';
+import { setUser } from '../app/userSlice';
+import { setToken } from '../app/tokenSlice';
+import { useDispatch } from 'react-redux';
 
-const LoginForm = ({ handleSetUser }) => {
+const LoginForm = () => {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
+	const dispatch = useDispatch();
 
 	const handleLogin = async (e) => {
 		e.preventDefault();
@@ -13,8 +17,8 @@ const LoginForm = ({ handleSetUser }) => {
 
 		await login({ username, password })
 			.then((res) => {
-				setUserData(res);
-				handleSetUser();
+				dispatch(setUser(res.username));
+				dispatch(setToken(res.token));
 			})
 			.catch((err) => {
 				console.error(err);

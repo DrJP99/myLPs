@@ -1,22 +1,18 @@
 import { useEffect, useState } from 'react';
 import { clearUserData, getUser } from '../services/users';
 import LoginForm from './LoginForm';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearUser } from '../app/userSlice';
+import { clearToken } from '../app/tokenSlice';
 
 const Admin = () => {
-	const [user, setUser] = useState();
-
-	useEffect(() => {
-		setUser(getUser());
-	}, []);
+	const user = useSelector((state) => state.user);
+	const dispatch = useDispatch();
 
 	const handleLogout = (e) => {
 		e.preventDefault();
-		clearUserData();
-		setUser(null);
-	};
-
-	const handleLogin = () => {
-		setUser(getUser());
+		dispatch(clearUser());
+		dispatch(clearToken());
 	};
 
 	console.log(user);
@@ -29,7 +25,7 @@ const Admin = () => {
 					<button onClick={handleLogout}>Logout</button>
 				</div>
 			) : (
-				<LoginForm handleSetUser={handleLogin} />
+				<LoginForm />
 			)}
 		</div>
 	);

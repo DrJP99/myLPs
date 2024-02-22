@@ -1,72 +1,45 @@
 import axios from 'axios';
 const baseUrl = '/api/users';
-let token = null;
-let user = null;
 
-export const readLocalStorage = () => {
-	console.log('reading local...');
+let token = null;
+
+export const readLocalStorage = async () => {
 	const loggedUserToken = window.localStorage.getItem('loggedUserToken');
-	const loggedUser = window.localStorage.getItem('loggedUser');
-	if (loggedUserToken && loggedUser) {
+	const usr = await validateToken(loggedUserToken);
+	if (loggedUserToken && usr) {
 		const userData = {
 			token: loggedUserToken,
-			username: loggedUser,
+			username: usr.data.username,
 		};
-		setUserData(userData);
+		return userData;
 	} else {
-		clearUserData();
+		return null;
 	}
 };
 
 export const setToken = (newToken) => {
-	if (newToken) {
-		token = `bearer ${newToken}`;
-		window.localStorage.setItem('loggedUserToken', newToken);
-	} else {
-		token = null;
-		window.localStorage.removeItem('loggedUserToken');
-	}
-	console.log('set token to:', token);
-};
-
-export const setUser = (newUser) => {
-	if (newUser) {
-		user = newUser;
-		window.localStorage.setItem('loggedUser', newUser);
-	} else {
-		user = null;
-		window.localStorage.removeItem('loggedUser');
-	}
-	console.log('set user to:', user);
+	token = newToken;
 };
 
 export const clearUserData = () => {
 	setToken(null);
-	setUser(null);
 };
 
-export const validateToken = async () => {
-	await axios
-		.get(baseUrl, '/validate')
-		.then(() => {
-			console.log('Valid Token');
-		})
+export const validateToken = async (tkn) => {
+	tkn = `bearer ${tkn}`;
+	const token = tkn || getToken();
+	const config = {
+		headers: { Authorization: token },
+	};
+	const res = await axios
+		.post(`${baseUrl}/validate`, null, config)
 		.catch(() => {
-			console.log('Invalid Token');
-			clearUserData();
+			console.error('error validating token');
+			return null;
 		});
-};
-
-export const setUserData = (data) => {
-	setToken(data.token);
-	setUser(data.username);
-	validateToken();
+	return res;
 };
 
 export const getToken = () => {
 	return token;
-};
-
-export const getUser = () => {
-	return user;
 };

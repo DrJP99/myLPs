@@ -9,11 +9,25 @@ import NavBar from './components/NavBar';
 import ArtistForm from './components/ArtistForm';
 import Artist from './components/Artist';
 import Admin from './components/Admin';
-import { readLocalStorage } from './services/users';
+import { readLocalStorage, validateToken } from './services/users';
+import { useDispatch } from 'react-redux';
+import { clearUser, setUser } from './app/userSlice';
+import { clearToken, setToken } from './app/tokenSlice';
 
 function App() {
+	const dispatch = useDispatch();
+
 	useEffect(() => {
-		readLocalStorage();
+		readLocalStorage().then((userInfo) => {
+			console.log('user info:', userInfo);
+			if (userInfo) {
+				dispatch(setUser(userInfo.username));
+				dispatch(setToken(userInfo.token));
+			} else {
+				dispatch(clearUser());
+				dispatch(clearToken());
+			}
+		});
 	}, []);
 
 	return (

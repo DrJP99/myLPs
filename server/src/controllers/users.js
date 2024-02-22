@@ -14,7 +14,7 @@ usersRouter.get('/:id', async (req, res) => {
 	res.json(user);
 });
 
-usersRouter.get('/validate', async (req, res) => {
+usersRouter.post('/validate', (req, res) => {
 	const user = req.user;
 
 	if (!user) {
