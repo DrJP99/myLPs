@@ -13,6 +13,7 @@ import { readLocalStorage } from './services/users';
 import { useDispatch } from 'react-redux';
 import { clearUser, setUser } from './app/userSlice';
 import { clearToken, setToken } from './app/tokenSlice';
+import Artists from './components/Artists';
 
 function App() {
 	const dispatch = useDispatch();
@@ -40,6 +41,7 @@ function App() {
 				<Route path="/add/album" element={<AlbumForm />} />
 				<Route path="/add" element={<Navigate to="/add/album" />} />
 				<Route path="/add/artist" element={<ArtistForm />} />
+				<Route path="/artists" element={<Artists />} />
 				<Route path="/artist/:id" element={<Artist />} />
 				<Route path="/admin" element={<Admin />} />
 			</Routes>
