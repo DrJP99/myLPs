@@ -1,6 +1,4 @@
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getUser } from '../services/users';
 import { useSelector } from 'react-redux';
 
 const NavBar = () => {

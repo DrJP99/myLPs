@@ -9,7 +9,7 @@ import NavBar from './components/NavBar';
 import ArtistForm from './components/ArtistForm';
 import Artist from './components/Artist';
 import Admin from './components/Admin';
-import { readLocalStorage, validateToken } from './services/users';
+import { readLocalStorage } from './services/users';
 import { useDispatch } from 'react-redux';
 import { clearUser, setUser } from './app/userSlice';
 import { clearToken, setToken } from './app/tokenSlice';
@@ -28,7 +28,7 @@ function App() {
 				dispatch(clearToken());
 			}
 		});
-	}, []);
+	}, [dispatch]);
 
 	return (
 		<div className="App">

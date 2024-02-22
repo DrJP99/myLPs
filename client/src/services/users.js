@@ -5,16 +5,18 @@ let token = null;
 
 export const readLocalStorage = async () => {
 	const loggedUserToken = window.localStorage.getItem('loggedUserToken');
+	if (!loggedUserToken) {
+		return null;
+	}
 	const usr = await validateToken(loggedUserToken);
-	if (loggedUserToken && usr) {
+	if (usr) {
 		const userData = {
 			token: loggedUserToken,
 			username: usr.data.username,
 		};
 		return userData;
-	} else {
-		return null;
 	}
+	return null;
 };
 
 export const setToken = (newToken) => {
