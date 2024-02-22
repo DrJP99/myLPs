@@ -1,14 +1,8 @@
 import React, { useEffect } from 'react';
-import { imagefrombuffer } from 'imagefrombuffer';
+// import { imagefrombuffer } from 'imagefrombuffer';
 import AlbumForm from './components/AlbumForm';
-import axios from 'axios';
-import {
-	BrowserRouter,
-	Routes,
-	Route,
-	NavLink,
-	Navigate,
-} from 'react-router-dom';
+// import axios from 'axios';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Albums from './components/Albums';
 import Album from './components/Album';
 import NavBar from './components/NavBar';

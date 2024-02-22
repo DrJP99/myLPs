@@ -1,5 +1,5 @@
 import React from 'react';
-import { getAll, deleteOne } from '../services/albums';
+import { getAll } from '../services/albums';
 import AlbumComponent from './AlbumComponent';
 
 const Albums = () => {
@@ -8,14 +8,6 @@ const Albums = () => {
 	React.useEffect(() => {
 		getAll().then((data) => setAlbumData(data));
 	}, []);
-
-	const handleDeleteAlbum = async (albumToDelete) => {
-		setAlbumData(
-			albumData.filter((album) => album.id !== albumToDelete.id),
-		);
-
-		await deleteOne(albumToDelete.id);
-	};
 
 	return (
 		<div>

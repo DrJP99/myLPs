@@ -1,10 +1,10 @@
 import React from 'react';
 import { getOne } from '../services/albums';
-import { useParams, redirect, useNavigate } from 'react-router';
+import { useParams, useNavigate } from 'react-router';
 import { deleteOne } from '../services/albums';
 import { Link } from 'react-router-dom';
 
-const Album = ({}) => {
+const Album = () => {
 	// The Album is the page that displays all the information of a single album
 
 	const [album, setAlbum] = React.useState(null);
