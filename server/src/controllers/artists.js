@@ -1,12 +1,12 @@
 const artistsRouter = require('express').Router();
 const Artist = require('../models/artist');
 
-artistsRouter.get('/', async (req, res) => {
+artistsRouter.get('/', async (req, res, next) => {
 	const artists = await Artist.find({});
 	res.json(artists);
 });
 
-artistsRouter.get('/:id', async (req, res) => {
+artistsRouter.get('/:id', async (req, res, next) => {
 	const artist = await Artist.findById(req.params.id).populate('records', {
 		title: 1,
 		year: 1,
@@ -19,7 +19,7 @@ artistsRouter.get('/:id', async (req, res) => {
 	}
 });
 
-artistsRouter.post('/', async (req, res) => {
+artistsRouter.post('/', async (req, res, next) => {
 	const { name, origin, desc, spotifyId } = req.body;
 
 	const newArtist = new Artist({
@@ -30,8 +30,8 @@ artistsRouter.post('/', async (req, res) => {
 		records: [],
 	});
 
-	const savedArtist = await newArtist.save().catch((error) => {
-		res.status(400).json({ error: error.message });
+	const savedArtist = await newArtist.save().catch((err) => {
+		res.status(400).json({ error: err.message });
 	});
 
 	res.status(201).json(savedArtist);
