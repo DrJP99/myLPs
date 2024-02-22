@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getToken } from './users';
 const baseUrl = '/api/artists';
 
 export const getAll = () => {
@@ -12,6 +13,17 @@ export const getOne = (id) => {
 };
 
 export const create = async (newObject) => {
-	const res = await axios.post(baseUrl, newObject);
+	const config = {
+		headers: { Authorization: getToken() },
+	};
+	const res = await axios.post(baseUrl, newObject, config);
 	return res.data;
+};
+
+export const deleteOne = async (id) => {
+	const config = {
+		headers: { Authorization: getToken() },
+	};
+	const res = await axios.delete(`${baseUrl}/${id}`, config);
+	return res;
 };

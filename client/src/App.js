@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { imagefrombuffer } from 'imagefrombuffer';
 import AlbumForm from './components/AlbumForm';
 import axios from 'axios';
@@ -14,8 +14,14 @@ import Album from './components/Album';
 import NavBar from './components/NavBar';
 import ArtistForm from './components/ArtistForm';
 import Artist from './components/Artist';
+import Admin from './components/Admin';
+import { readLocalStorage } from './services/users';
 
 function App() {
+	useEffect(() => {
+		readLocalStorage();
+	}, []);
+
 	return (
 		<div className="App">
 			<NavBar />
@@ -27,6 +33,7 @@ function App() {
 				<Route path="/add" element={<Navigate to="/add/album" />} />
 				<Route path="/add/artist" element={<ArtistForm />} />
 				<Route path="/artist/:id" element={<Artist />} />
+				<Route path="/admin" element={<Admin />} />
 			</Routes>
 		</div>
 	);

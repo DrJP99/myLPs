@@ -14,6 +14,17 @@ usersRouter.get('/:id', async (req, res) => {
 	res.json(user);
 });
 
+usersRouter.get('/validate', async (req, res) => {
+	const user = req.user;
+
+	if (!user) {
+		return res.status(401).json({
+			error: 'token missing or invalid',
+		});
+	}
+	res.status(200).json(user);
+});
+
 usersRouter.post('/', async (req, res) => {
 	const { username, password } = req.body;
 

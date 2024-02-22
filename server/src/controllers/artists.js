@@ -45,4 +45,17 @@ artistsRouter.post('/', async (req, res, next) => {
 	res.status(201).json(savedArtist);
 });
 
+artistsRouter.delete('/:id', async (req, res, next) => {
+	const user = req.user;
+	if (!user) {
+		return res
+			.status(401)
+			.json({ error: 'token missing or invalid' })
+			.end();
+	}
+
+	await Artist.findByIdAndRemove(req.params.id);
+	res.status(204).end();
+});
+
 module.exports = artistsRouter;

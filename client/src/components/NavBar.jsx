@@ -13,6 +13,9 @@ const NavBar = () => {
 				<li>
 					<Link to="/add/artist">Add Artist</Link>
 				</li>
+				<li>
+					<Link to="/admin">Admin</Link>
+				</li>
 			</ul>
 		</nav>
 	);
