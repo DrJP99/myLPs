@@ -1,7 +1,9 @@
 const morgan = require('morgan');
 const logger = require('./logger');
 const config = require('./config');
+const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv').config();
+const User = require('../src/models/user');
 
 morgan.token('body', (req) => {
 	return JSON.stringify(req.body);
@@ -46,6 +48,35 @@ const unknownEndpoint = (req, res) => {
 	res.status(404).send({ error: 'unknown endpoint' });
 };
 
+const tokenExtractor = (req, res, next) => {
+	const authorization = req.get('authorization');
+	if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+		req.token = authorization.substring(7);
+	} else if (authorization) {
+		req.token = authorization;
+	}
+
+	next();
+};
+
+const userExtractor = async (req, res, next) => {
+	if (req.token) {
+		const decodedToken = jwt.verify(req.token, process.env.SECRET);
+
+		if (!decodedToken.id) {
+			return res.status(401).json({ error: 'token missing or invalid' });
+		}
+
+		const user = await User.findById(decodedToken.id);
+
+		if (!user) {
+			res.status(404).json({ error: 'user not found' }).end();
+		}
+		req.user = user;
+	}
+	next();
+};
+
 const errorHandler = (error, req, res, next) => {
 	logger.error(error.message);
 
@@ -71,4 +102,6 @@ module.exports = {
 	requestLogger,
 	unknownEndpoint,
 	errorHandler,
+	tokenExtractor,
+	userExtractor,
 };

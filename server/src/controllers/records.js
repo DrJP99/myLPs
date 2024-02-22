@@ -22,6 +22,14 @@ recordsRouter.get('/:id', async (req, res) => {
 recordsRouter.post('/', async (req, res) => {
 	const { title, artist, year, cover, genre, spotifyId } = req.body;
 
+	const user = req.user;
+	if (!user) {
+		return res
+			.status(401)
+			.json({ error: 'token missing or invalid' })
+			.end();
+	}
+
 	const albumArtist = await Artist.findOne({ name: artist });
 	if (!albumArtist) {
 		return res.status(400).json({ error: 'Invalid artist' });
@@ -60,6 +68,14 @@ recordsRouter.post('/', async (req, res) => {
 });
 
 recordsRouter.delete('/:id', async (req, res) => {
+	const user = req.user;
+	if (!user) {
+		return res
+			.status(401)
+			.json({ error: 'token missing or invalid' })
+			.end();
+	}
+
 	const record = await Record.findById(req.params.id);
 
 	await Record.findByIdAndDelete(req.params.id);

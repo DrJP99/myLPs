@@ -22,6 +22,14 @@ artistsRouter.get('/:id', async (req, res, next) => {
 artistsRouter.post('/', async (req, res, next) => {
 	const { name, origin, desc, spotifyId } = req.body;
 
+	const user = req.user;
+	if (!user) {
+		return res
+			.status(401)
+			.json({ error: 'token missing or invalid' })
+			.end();
+	}
+
 	const newArtist = new Artist({
 		name: name,
 		origin: origin,

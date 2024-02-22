@@ -5,11 +5,15 @@ const config = require('./utils/config');
 const logger = require('./utils/logger');
 const middleware = require('./utils/middleware');
 
+app.use(middleware.tokenExtractor);
+
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
 
 const recordsRouter = require('./src/controllers/records');
 const artistsRouter = require('./src/controllers/artists');
+const usersRouter = require('./src/controllers/users');
+const loginRouter = require('./src/controllers/login');
 const { stat } = require('fs');
 
 logger.info('Connecting to:', config.MONGODB_URI);
@@ -27,8 +31,10 @@ app.use(express.json());
 app.use(express.static('build'));
 app.use(middleware.requestLogger);
 
-app.use('/api/records', recordsRouter);
-app.use('/api/artists', artistsRouter);
+app.use('/api/records', middleware.userExtractor, recordsRouter);
+app.use('/api/artists', middleware.userExtractor, artistsRouter);
+app.use('/api/users', middleware.userExtractor, usersRouter);
+app.use('/api/login', loginRouter);
 
 app.get('/api', (req, res) => {
 	res.json({ message: 'Hello world!!' });
