@@ -7,7 +7,7 @@ const ArtistComponent = ({ artist }) => {
 				<div className="image-artist"></div>
 			</Link>
 			<div className="card-headers">
-				<p className="card-title">
+				<p className="card-title text-center">
 					<Link to={'/artist/' + artist.id}>{artist.name}</Link>
 				</p>
 			</div>

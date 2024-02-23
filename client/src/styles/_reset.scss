@@ -110,17 +110,19 @@ a {
 $image-size: 250px;
 
 .card {
-	border: 1px solid;
+	// border: 1px solid;
 	border-radius: 3px;
 	margin: 25px;
 
 	width: $image-size;
+	transition: $transition-time;
 
 	.image {
 		&-cover {
 			height: $image-size;
 			width: $image-size;
 			background-color: white;
+			border-radius: 3px;
 		}
 
 		&-artist {
@@ -154,4 +156,8 @@ $image-size: 250px;
 		white-space: nowrap;
 		text-overflow: ellipsis;
 	}
+}
+
+.text-center {
+	text-align: center;
 }

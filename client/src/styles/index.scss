@@ -29,6 +29,12 @@
 			color: $blue-400;
 		}
 	}
+
+	.card {
+		&:hover {
+			background-color: $cream-600;
+		}
+	}
 }
 
 .dark {
@@ -54,6 +60,12 @@
 	a {
 		&:hover {
 			color: $red-700;
+		}
+	}
+
+	.card {
+		&:hover {
+			background-color: $dark-700;
 		}
 	}
 }
