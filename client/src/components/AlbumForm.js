@@ -11,6 +11,7 @@ const AlbumForm = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
+		// TODO: add persistent data to avoid unnecessary API calls
 		getAll().then((data) => {
 			let a = data.map((artist) => artist.name);
 			setAllArtists(a);

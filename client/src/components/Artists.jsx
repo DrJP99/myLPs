@@ -6,6 +6,7 @@ const Artists = () => {
 	const [artists, setArtists] = useState(null);
 
 	useEffect(() => {
+		// TODO: add persistent data to avoid unnecessary API calls
 		getAll().then((data) => setArtists(data));
 	}, []);
 

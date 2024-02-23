@@ -6,6 +6,7 @@ const Albums = () => {
 	const [albumData, setAlbumData] = React.useState(null);
 
 	React.useEffect(() => {
+		// TODO: add persistent data to avoid unnecessary API calls
 		getAll().then((data) => setAlbumData(data));
 	}, []);
 

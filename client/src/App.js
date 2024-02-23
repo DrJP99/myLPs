@@ -22,6 +22,7 @@ function App() {
 	const theme = useSelector((state) => state.theme);
 
 	useEffect(() => {
+		dispatch(readSavedTheme());
 		readLocalStorage().then((userInfo) => {
 			console.log('user info:', userInfo);
 			if (userInfo) {
@@ -32,7 +33,6 @@ function App() {
 				dispatch(clearToken());
 			}
 		});
-		dispatch(readSavedTheme());
 	}, [dispatch]);
 
 	console.log(theme);
