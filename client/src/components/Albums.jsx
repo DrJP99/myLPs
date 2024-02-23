@@ -12,14 +12,16 @@ const Albums = () => {
 
 	return (
 		<div>
-			<h1>My Albums</h1>
-			{albumData ? (
-				albumData.map((album) => (
-					<AlbumComponent album={album} key={album.id} />
-				))
-			) : (
-				<p>Loading...</p>
-			)}
+			<h1 className="header-1">My Albums</h1>
+			<div className="grid-container">
+				{albumData ? (
+					albumData.map((album) => (
+						<AlbumComponent album={album} key={album.id} />
+					))
+				) : (
+					<p>Loading...</p>
+				)}
+			</div>
 		</div>
 	);
 };

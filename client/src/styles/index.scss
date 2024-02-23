@@ -7,6 +7,12 @@
 
 	.app-container {
 		background-color: $background-alt;
+		border-color: $blue-400;
+
+		::selection {
+			background-color: $blue-400;
+			color: $background-alt;
+		}
 	}
 
 	.navbar {
@@ -17,6 +23,12 @@
 			background-color: $blue-700;
 		}
 	}
+
+	a {
+		&:hover {
+			color: $blue-400;
+		}
+	}
 }
 
 .dark {
@@ -25,11 +37,23 @@
 
 	.app-container {
 		background-color: $background-alt-dark;
+		border-color: $red-700;
+
+		::selection {
+			background-color: $red-700;
+			color: $background-alt-dark;
+		}
 	}
 
 	.navbar-item {
 		&:hover {
 			background-color: $dark-700;
+		}
+	}
+
+	a {
+		&:hover {
+			color: $red-700;
 		}
 	}
 }

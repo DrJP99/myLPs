@@ -12,12 +12,40 @@ $transition-time: 150ms;
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
+	transition: $transition-time;
 }
 
 .app-container {
 	margin: 0 $main-margin;
 	padding: 20px;
 	flex: 1;
+	border-style: solid;
+	border-width: 0 1px;
+}
+
+%header {
+	text-align: center;
+	font-weight: bold;
+}
+
+.header {
+	&-1 {
+		@extend %header;
+		margin-bottom: 25px;
+		font-size: 3em;
+	}
+
+	&-2 {
+		@extend %header;
+		margin-bottom: 20px;
+		font-size: 2em;
+	}
+
+	&-3 {
+		@extend %header;
+		margin-bottom: 15px;
+		font-size: 1.5em;
+	}
 }
 
 .navbar {
@@ -65,4 +93,65 @@ $transition-time: 150ms;
 
 h1 {
 	margin: 0;
+}
+
+a {
+	transition: $transition-time;
+	text-decoration: none;
+	color: inherit;
+}
+
+.grid-container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+$image-size: 250px;
+
+.card {
+	border: 1px solid;
+	border-radius: 3px;
+	margin: 25px;
+
+	width: $image-size;
+
+	.image {
+		&-cover {
+			height: $image-size;
+			width: $image-size;
+			background-color: white;
+		}
+
+		&-artist {
+			height: $image-size * 0.75;
+			width: $image-size * 0.75;
+			background-color: white;
+			border-radius: 50%;
+			margin: 15px auto;
+		}
+	}
+
+	&-headers {
+		padding: 10px 20px;
+	}
+
+	&-title {
+		font-size: 1.25em;
+		margin: 5px 0;
+
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}
+
+	&-subtitle {
+		font-size: 1em;
+		margin: 5px 0;
+		font-style: italic;
+
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}
 }

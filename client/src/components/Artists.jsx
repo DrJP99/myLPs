@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getAll } from '../services/artists';
-import { Link } from 'react-router-dom';
+import ArtistComponent from './ArtistComponent';
 
 const Artists = () => {
 	const [artists, setArtists] = useState(null);
@@ -10,22 +10,20 @@ const Artists = () => {
 		getAll().then((data) => setArtists(data));
 	}, []);
 
+	console.log(artists);
+
 	return (
 		<div>
-			<h1>Artists</h1>
-			{artists ? (
-				<ul>
-					{artists.map((artist) => (
-						<li key={artist.id}>
-							<Link to={'/artist/' + artist.id}>
-								{artist.name}
-							</Link>
-						</li>
-					))}
-				</ul>
-			) : (
-				<p>Loading...</p>
-			)}
+			<h1 className="header-1">Artists</h1>
+			<div className="grid-container">
+				{artists ? (
+					artists.map((artist) => (
+						<ArtistComponent key={artist.id} artist={artist} />
+					))
+				) : (
+					<p>Loading...</p>
+				)}
+			</div>
 		</div>
 	);
 };

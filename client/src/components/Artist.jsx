@@ -13,10 +13,10 @@ const Artist = () => {
 
 	return artist ? (
 		<div>
-			<h1>{artist.name}</h1>
+			<h2 className="header-2">{artist.name}</h2>
 			<p>{artist.origin}</p>
 			<p>{artist.desc}</p>
-			<h2>Records:</h2>
+			<h3 className="header-3">Records:</h3>
 			<ul>
 				{artist.records.map((records) => (
 					<li key={records.id}>
