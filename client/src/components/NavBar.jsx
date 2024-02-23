@@ -5,7 +5,7 @@ const NavBar = () => {
 	const user = useSelector((state) => state.user);
 
 	return (
-		<nav>
+		<nav className="nav-bar">
 			<ul>
 				<li>
 					<Link to="/">Home</Link>

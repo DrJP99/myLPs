@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
-// import { imagefrombuffer } from 'imagefrombuffer';
 import AlbumForm from './components/AlbumForm';
-// import axios from 'axios';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Albums from './components/Albums';
 import Album from './components/Album';
@@ -14,6 +12,8 @@ import { useDispatch } from 'react-redux';
 import { clearUser, setUser } from './app/userSlice';
 import { clearToken, setToken } from './app/tokenSlice';
 import Artists from './components/Artists';
+
+import './styles/index.scss';
 
 function App() {
 	const dispatch = useDispatch();
@@ -32,19 +32,21 @@ function App() {
 	}, [dispatch]);
 
 	return (
-		<div className="App">
-			<NavBar />
-			<Routes>
-				<Route path="/" element={<Albums />} />
-				<Route path="/album/:id" element={<Album />} />
-				<Route path="/album" element={<Navigate to="/" />} />
-				<Route path="/add/album" element={<AlbumForm />} />
-				<Route path="/add" element={<Navigate to="/add/album" />} />
-				<Route path="/add/artist" element={<ArtistForm />} />
-				<Route path="/artists" element={<Artists />} />
-				<Route path="/artist/:id" element={<Artist />} />
-				<Route path="/admin" element={<Admin />} />
-			</Routes>
+		<div className="app light">
+			<div className="app-container">
+				<NavBar />
+				<Routes>
+					<Route path="/" element={<Albums />} />
+					<Route path="/album/:id" element={<Album />} />
+					<Route path="/album" element={<Navigate to="/" />} />
+					<Route path="/add/album" element={<AlbumForm />} />
+					<Route path="/add" element={<Navigate to="/add/album" />} />
+					<Route path="/add/artist" element={<ArtistForm />} />
+					<Route path="/artists" element={<Artists />} />
+					<Route path="/artist/:id" element={<Artist />} />
+					<Route path="/admin" element={<Admin />} />
+				</Routes>
+			</div>
 		</div>
 	);
 }

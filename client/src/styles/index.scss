@@ -1,0 +1,54 @@
+@import '_theme_light.scss';
+
+$theme: $light-theme;
+
+@mixin text-color($theme) {
+	color: map-get($theme, 'clr-text');
+}
+
+@mixin background-color($theme) {
+	background-color: map-get($theme, 'clr-bg');
+}
+
+@mixin background-color-alt($theme) {
+	background-color: map-get($theme, 'clr-bg-alt');
+}
+
+@mixin background-color-accent1($theme) {
+	background-color: map-get($theme, 'clr-accent1');
+}
+
+body {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+.app {
+	@include background-color-alt($light-theme);
+	@include text-color($light-theme);
+	margin: 0;
+	padding: 0;
+	min-height: 100vh;
+}
+
+.app-container {
+	@include background-color($light-theme);
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	margin: 0 15px;
+	padding: 30px;
+}
+
+.nav-bar ul {
+	background-color: map-get($theme, 'clr-accent-1');
+	display: flex;
+	padding: 10px 0;
+	margin: 0;
+
+	li {
+		list-style: none;
+		margin: 10px;
+	}
+}
