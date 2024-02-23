@@ -1,33 +1,49 @@
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeTheme } from '../app/themeSlice';
 
 const NavBar = () => {
 	const user = useSelector((state) => state.user);
 
+	const theme = useSelector((state) => state.theme);
+	const dispatch = useDispatch();
+
+	const handleThemeChange = (e) => {
+		e.preventDefault();
+		console.log('changing theme');
+		dispatch(changeTheme());
+	};
+
 	return (
-		<nav className="nav-bar">
+		<nav className="navbar">
 			<ul>
-				<li>
-					<Link to="/">Home</Link>
-				</li>
-				<li>
-					<Link to="/artists">Artists</Link>
-				</li>
+				<Link to="/" className="navbar-item">
+					<li>Home</li>
+				</Link>
+				<Link to="/artists" className="navbar-item">
+					<li>Artists</li>
+				</Link>
 				{user ? (
 					<>
-						<li>
-							<Link to="/add/album">Add Album</Link>
-						</li>
-						<li>
-							<Link to="/add/artist">Add Artist</Link>
-						</li>
-						<li>
-							<Link to="/admin">Admin</Link>
-						</li>
+						<Link to="/add/album" className="navbar-item">
+							<li>Add Album</li>
+						</Link>
+						<Link to="/add/artist" className="navbar-item">
+							<li>Add Artist</li>
+						</Link>
+						<Link to="/admin" className="navbar-item">
+							<li>Admin</li>
+						</Link>
 					</>
 				) : (
 					<></>
 				)}
+				<button
+					className="navbar-item float-right"
+					onClick={handleThemeChange}
+				>
+					<li>{theme} theme</li>
+				</button>
 			</ul>
 		</nav>
 	);

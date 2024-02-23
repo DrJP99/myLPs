@@ -8,15 +8,18 @@ import ArtistForm from './components/ArtistForm';
 import Artist from './components/Artist';
 import Admin from './components/Admin';
 import { readLocalStorage } from './services/users';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { clearUser, setUser } from './app/userSlice';
 import { clearToken, setToken } from './app/tokenSlice';
 import Artists from './components/Artists';
 
 import './styles/index.scss';
+import { readSavedTheme } from './app/themeSlice';
 
 function App() {
 	const dispatch = useDispatch();
+
+	const theme = useSelector((state) => state.theme);
 
 	useEffect(() => {
 		readLocalStorage().then((userInfo) => {
@@ -29,12 +32,15 @@ function App() {
 				dispatch(clearToken());
 			}
 		});
+		dispatch(readSavedTheme());
 	}, [dispatch]);
 
+	console.log(theme);
+
 	return (
-		<div className="app light">
+		<div className={'app ' + theme}>
+			<NavBar />
 			<div className="app-container">
-				<NavBar />
 				<Routes>
 					<Route path="/" element={<Albums />} />
 					<Route path="/album/:id" element={<Album />} />
