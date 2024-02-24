@@ -27,38 +27,45 @@ const ArtistForm = () => {
 
 	return (
 		<div>
-			<form>
-				<label htmlFor="name">Name</label>
-				<input
-					type="text"
-					value={name}
-					id="name"
-					name="name"
-					onChange={({ target }) => setName(target.value)}
-				/>
-				<br />
-				<label htmlFor="origin">Origin</label>
-				<input
-					type="text"
-					value={origin}
-					id="origin"
-					name="origin"
-					onChange={({ target }) => setOrigin(target.value)}
-				/>
-				<br />
-				<label htmlFor="desc">Description</label>
-				<input
-					type="text"
-					value={desc}
-					id="desc"
-					name="desc"
-					onChange={({ target }) => setDesc(target.value)}
-				/>
-				<br />
-				<button type="submit" onClick={handleSubmit}>
-					Add artist
-				</button>
-			</form>
+			<h1 className="header-1">Add new artist</h1>
+			<div className="form">
+				<form className="form-group">
+					<label htmlFor="name">Name</label>
+					<input
+						type="text"
+						value={name}
+						id="name"
+						name="name"
+						onChange={({ target }) => setName(target.value)}
+					/>
+					<label htmlFor="origin">Country of Origin</label>
+					<input
+						type="text"
+						value={origin}
+						id="origin"
+						name="origin"
+						onChange={({ target }) => setOrigin(target.value)}
+					/>
+					<label htmlFor="portrait">Portrait Image</label>
+					<input type="file" id="portrait" name="portrait" />
+					<label htmlFor="desc">Description (optional)</label>
+					<textarea
+						value={desc}
+						id="desc"
+						name="desc"
+						cols={40}
+						rows={5}
+						onChange={({ target }) => setDesc(target.value)}
+					/>
+					<button
+						className="button"
+						type="submit"
+						onClick={handleSubmit}
+					>
+						Add artist
+					</button>
+				</form>
+			</div>
 		</div>
 	);
 };

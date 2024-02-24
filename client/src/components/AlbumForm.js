@@ -8,6 +8,7 @@ const AlbumForm = () => {
 	const [artist, setArtist] = useState('');
 	const [allArtists, setAllArtists] = useState([]);
 	const [year, setYear] = useState('');
+	const [comment, setComment] = useState('');
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -25,6 +26,7 @@ const AlbumForm = () => {
 			title: title,
 			artist: artist,
 			year: year,
+			comment: comment,
 		};
 
 		create(newAlbum)
@@ -38,40 +40,56 @@ const AlbumForm = () => {
 
 	return (
 		<div>
-			<h2>Add new album</h2>
-			<form>
-				<label htmlFor="title">Title</label>
-				<input
-					type="text"
-					value={title}
-					id="title"
-					name="title"
-					onChange={({ target }) => setTitle(target.value)}
-				/>
-				<br />
-				<label htmlFor="artist">Artist</label>
-				<select
-					value={artist}
-					onChange={({ target }) => setArtist(target.value)}
-				>
-					{allArtists.map((artist, i) => (
-						<option key={artist}>{artist}</option>
-					))}
-				</select>
-				<br />
-				<label htmlFor="year">Year</label>
-				<input
-					type="number"
-					value={year}
-					id="year"
-					name="year"
-					onChange={({ target }) => setYear(target.value)}
-				/>
-				<br />
-				<button type="submit" onClick={handleSubmit}>
-					Add album
-				</button>
-			</form>
+			<h1 className="header-1">Add new album</h1>
+			<div className="form">
+				<form className="form-group">
+					<label htmlFor="title">Title</label>
+					<input
+						type="text"
+						value={title}
+						id="title"
+						name="title"
+						onChange={({ target }) => setTitle(target.value)}
+					/>
+					<label htmlFor="artist">Artist</label>
+					<select
+						value={artist}
+						onChange={({ target }) => setArtist(target.value)}
+					>
+						{allArtists.map((artist, i) => (
+							<option key={artist}>{artist}</option>
+						))}
+					</select>
+					<label htmlFor="year">Year</label>
+					<input
+						type="number"
+						value={year}
+						id="year"
+						name="year"
+						onChange={({ target }) => setYear(target.value)}
+					/>
+					<label htmlFor="cover">Cover</label>
+					<input type="file" name="cover" />
+
+					<label htmlFor="comment">Comments (optional)</label>
+					<textarea
+						name="comment"
+						id="comment"
+						cols="40"
+						rows="5"
+						value={comment}
+						onChange={({ target }) => setComment(target.value)}
+					/>
+
+					<button
+						className="button"
+						type="submit"
+						onClick={handleSubmit}
+					>
+						Add album
+					</button>
+				</form>
+			</div>
 		</div>
 	);
 };

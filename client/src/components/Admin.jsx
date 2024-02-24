@@ -16,7 +16,7 @@ const Admin = () => {
 	console.log(user);
 	return (
 		<div>
-			<h1>Admin</h1>
+			<h1 className="header-1">Admin</h1>
 			{user ? (
 				<div>
 					<p>{user} logged in</p>

@@ -35,6 +35,54 @@
 			background-color: $cream-600;
 		}
 	}
+
+	%light-button {
+		background-color: $primary;
+		color: $cream-400;
+
+		&:hover {
+			background-color: $blue-700;
+			color: $primary;
+		}
+	}
+
+	.button {
+		@extend %light-button;
+	}
+
+	.form {
+		background-color: $background;
+		border-color: $primary;
+
+		input {
+			background-color: $cream-300;
+			&[type='file'] {
+				&::file-selector-button {
+					@extend %light-button;
+				}
+			}
+
+			&:focus {
+				outline: solid 2px $primary;
+			}
+		}
+
+		textarea {
+			background-color: $cream-300;
+
+			&:focus {
+				outline: solid 2px $primary;
+			}
+		}
+
+		select {
+			background-color: $cream-300;
+
+			&:focus {
+				outline: solid 2px $primary;
+			}
+		}
+	}
 }
 
 .dark {
@@ -51,9 +99,13 @@
 		}
 	}
 
-	.navbar-item {
-		&:hover {
-			background-color: $dark-700;
+	.navbar {
+		background-color: $red-700;
+
+		.navbar-item {
+			&:hover {
+				background-color: $dark-700;
+			}
 		}
 	}
 
@@ -66,6 +118,55 @@
 	.card {
 		&:hover {
 			background-color: $dark-700;
+		}
+	}
+
+	%dark-button {
+		background-color: $danger-primary;
+		color: $cream-400;
+
+		&:hover {
+			background-color: $background-dark;
+			color: $danger-primary;
+			outline: 1px solid $danger-primary;
+		}
+	}
+
+	.button {
+		@extend %dark-button;
+	}
+
+	.form {
+		background-color: $background-dark;
+		border-color: $danger-primary;
+
+		input {
+			background-color: $cream-400;
+			&[type='file'] {
+				&::file-selector-button {
+					@extend %dark-button;
+				}
+			}
+
+			&:focus {
+				outline: solid 2px $danger-primary;
+			}
+		}
+
+		textarea {
+			background-color: $cream-400;
+
+			&:focus {
+				outline: solid 2px $danger-primary;
+			}
+		}
+
+		select {
+			background-color: $cream-400;
+
+			&:focus {
+				outline: solid 2px $danger-primary;
+			}
 		}
 	}
 }

@@ -11,6 +11,8 @@ $large-screen: 992px;
 $xlarge-screen: 1200px;
 $xxlarge-screen: 1400px;
 
+$border-radius: 3px;
+
 @media (min-width: $small-screen) {
 	// small devices
 }
@@ -31,7 +33,7 @@ $xxlarge-screen: 1400px;
 	// xxlarge devices
 }
 
-$main-margin: 150px;
+$main-margin: 10%;
 $transition-time: 150ms;
 
 .app {
@@ -63,6 +65,7 @@ $transition-time: 150ms;
 
 	&-2 {
 		@extend %header;
+		margin-top: 10px;
 		margin-bottom: 20px;
 		font-size: 2em;
 	}
@@ -113,6 +116,19 @@ $transition-time: 150ms;
 	}
 }
 
+%button {
+	padding: 10px 40px;
+	border-radius: $border-radius;
+	border: none;
+	font-weight: bold;
+	cursor: pointer;
+	transition: $transition-time;
+}
+
+.button {
+	@extend %button;
+}
+
 .float-right {
 	margin-left: auto;
 }
@@ -131,7 +147,7 @@ $image-size: 250px;
 
 .grid-container {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax($image-size + 30px, 2fr));
+	grid-template-columns: repeat(auto-fill, minmax($image-size + 20px, 1fr));
 	grid-gap: 25px;
 	justify-self: inline;
 }
@@ -144,7 +160,7 @@ $image-size: 250px;
 }
 
 .card {
-	border-radius: 3px;
+	border-radius: $border-radius;
 	margin: 25px;
 
 	width: $image-size;
@@ -155,7 +171,7 @@ $image-size: 250px;
 			height: $image-size;
 			width: $image-size;
 			background-color: white;
-			border-radius: 3px;
+			border-radius: $border-radius;
 		}
 
 		&-artist {
@@ -193,4 +209,77 @@ $image-size: 250px;
 
 .text-center {
 	text-align: center;
+}
+
+.form {
+	display: flex;
+	border: 1px solid;
+	border-radius: $border-radius;
+	width: 50%;
+	margin: auto;
+
+	.form-group {
+		padding: 20px;
+		flex: 1;
+
+		label {
+			display: block;
+			margin-bottom: 5px;
+			font-size: 1.25em;
+		}
+
+		input {
+			box-sizing: border-box;
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			width: 100%;
+			padding: 10px;
+			margin-bottom: 10px;
+			border-radius: $border-radius;
+			border: 1px solid #ccc;
+
+			&[type='number'] {
+				appearance: textfield;
+			}
+
+			&[type='file'] {
+				border: none;
+				padding: 0;
+
+				&::file-selector-button {
+					@extend %button;
+					margin-right: 25px;
+				}
+			}
+		}
+
+		textarea {
+			box-sizing: border-box;
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			width: 100%;
+			padding: 10px;
+			margin-bottom: 10px;
+			border-radius: $border-radius;
+			border: 1px solid #ccc;
+			resize: none;
+		}
+
+		select {
+			width: 100%;
+			padding: 10px;
+			margin-bottom: 10px;
+			border-radius: $border-radius;
+			border: 1px solid #ccc;
+
+			option {
+				padding: 10px;
+				border-radius: $border-radius;
+			}
+		}
+
+		button {
+			float: right;
+		}
+	}
 }
