@@ -4,18 +4,20 @@ import { useParams, useNavigate } from 'react-router';
 import { deleteOne } from '../services/albums';
 import { Link } from 'react-router-dom';
 
-const Album = () => {
+const Album = ({ data }) => {
 	// The Album is the page that displays all the information of a single album
 
-	const [album, setAlbum] = React.useState(null);
+	const [album, setAlbum] = React.useState(data || null);
 	const { id } = useParams();
 	const navigate = useNavigate();
 
 	React.useEffect(() => {
-		getOne(id)
-			.then((data) => setAlbum(data))
-			.catch(() => navigate('/'));
-	}, [id, navigate]);
+		if (!album) {
+			getOne(id)
+				.then((data) => setAlbum(data))
+				.catch(() => navigate('/'));
+		}
+	}, [id, navigate, album]);
 
 	const handleDelete = (e) => {
 		e.preventDefault();
