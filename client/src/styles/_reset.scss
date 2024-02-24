@@ -5,7 +5,48 @@ body {
 		sans-serif;
 }
 
-$main-margin: 100px;
+$small-screen: 576px;
+$medium-screen: 768px;
+$large-screen: 992px;
+$xlarge-screen: 1200px;
+$xxlarge-screen: 1400px;
+
+// @media (min-width: $small-screen) {
+// 	// small devices
+// 	.card-container {
+// 		width: 100%;
+// 	}
+// }
+
+// @media (min-width: $medium-screen) {
+// 	// small devices
+// 	.card-container {
+// 		width: 100%;
+// 	}
+// }
+
+// @media (min-width: $large-screen) {
+// 	// large devices
+// 	.card-container {
+// 		width: 50%;
+// 	}
+// }
+
+// @media (min-width: $xlarge-screen) {
+// 	// xlarge devices
+// 	.card-container {
+// 		width: 30%;
+// 	}
+// }
+
+// @media (min-width: $xxlarge-screen) {
+// 	// xxlarge devices
+// 	.card-container {
+// 		width: 30%;
+// 	}
+// }
+
+$main-margin: 150px;
 $transition-time: 150ms;
 
 .app {
@@ -101,13 +142,27 @@ a {
 	color: inherit;
 }
 
+$image-size: 250px;
+
 .grid-container {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
+	display: grid;
+	// flex-wrap: wrap;
+	// justify-content: space-between;
+	// align-content: flex-start;
+	grid-template-columns: repeat(auto-fill, minmax($image-size + 30px, 2fr));
+	grid-gap: 25px;
+	justify-self: inline;
 }
 
-$image-size: 250px;
+.card-container {
+	flex: 1;
+	display: flex;
+	flex-wrap: nowrap;
+	// justify-content: space-around;
+	// width: 20%;
+	// align-self: start;
+	justify-content: center;
+}
 
 .card {
 	// border: 1px solid;
