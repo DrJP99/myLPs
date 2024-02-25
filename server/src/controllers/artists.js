@@ -2,7 +2,11 @@ const artistsRouter = require('express').Router();
 const Artist = require('../models/artist');
 
 artistsRouter.get('/', async (req, res, next) => {
-	const artists = await Artist.find({});
+	const artists = await Artist.find({}).populate('records', {
+		title: 1,
+		year: 1,
+		genre: 1,
+	});
 	res.json(artists);
 });
 

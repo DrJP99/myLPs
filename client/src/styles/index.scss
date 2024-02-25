@@ -83,6 +83,13 @@
 			}
 		}
 	}
+
+	.modal {
+		.modal-content {
+			background-color: $background-alt;
+			border-color: $primary;
+		}
+	}
 }
 
 .dark {
@@ -167,6 +174,13 @@
 			&:focus {
 				outline: solid 2px $danger-primary;
 			}
+		}
+	}
+
+	.modal {
+		.modal-content {
+			background-color: $background-alt-dark;
+			border-color: $danger-primary;
 		}
 	}
 }

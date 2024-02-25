@@ -4,9 +4,15 @@ const Modal = ({ setDisplay, children }) => {
 		setDisplay(false);
 	};
 
+	// window.addEventListener('keydown', (e) => {
+	// 	if (e.key === 'Escape') {
+	// 		console.log('Escape...');
+	// 	}
+	// });
+
 	return (
-		<div className="modal">
-			<div className="modal-content">
+		<div className="modal" onClick={handleCloseModal}>
+			<div className="modal-content" onClick={(e) => e.stopPropagation()}>
 				<span className="close" onClick={handleCloseModal}>
 					&times;
 				</span>

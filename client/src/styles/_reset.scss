@@ -294,12 +294,14 @@ $image-size: 250px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	overflow-y: auto;
+	z-index: 1000;
 
 	.modal-content {
-		background-color: $cream-500;
 		border-radius: $border-radius;
 		padding: 20px;
 		width: 50%;
+		border: 1px solid;
 	}
 
 	.close {
@@ -307,5 +309,10 @@ $image-size: 250px;
 		font-size: 1.5em;
 		font-weight: bold;
 		cursor: pointer;
+		transition: $transition-time;
+
+		&:hover {
+			color: $red-700;
+		}
 	}
 }

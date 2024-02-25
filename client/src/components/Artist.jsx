@@ -1,14 +1,18 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { Navigate, useParams } from 'react-router';
 import { getOne } from '../services/artists';
 import { Link } from 'react-router-dom';
 
-const Artist = () => {
+const Artist = ({ data }) => {
 	const { id } = useParams();
-	const [artist, setArtist] = useState(null);
+	const [artist, setArtist] = useState(data);
 
 	useEffect(() => {
-		getOne(id).then((data) => setArtist(data));
+		if (!artist) {
+			getOne(id)
+				.then((data) => setArtist(data))
+				.catch(() => Navigate('/artists'));
+		}
 	}, [id]);
 
 	return artist ? (
