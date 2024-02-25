@@ -15,6 +15,7 @@ import Artists from './components/Artists';
 
 import './styles/index.scss';
 import { readSavedTheme } from './app/themeSlice';
+import About from './components/About';
 
 function App() {
 	const dispatch = useDispatch();
@@ -51,6 +52,7 @@ function App() {
 					<Route path="/artists" element={<Artists />} />
 					<Route path="/artist/:id" element={<Artist />} />
 					<Route path="/admin" element={<Admin />} />
+					<Route path="/about" element={<About />} />
 				</Routes>
 			</div>
 		</div>

@@ -23,6 +23,19 @@ artistsRouter.get('/:id', async (req, res, next) => {
 	}
 });
 
+artistsRouter.get('/:id/records', async (req, res, next) => {
+	const artist = await Artist.findById(req.params.id).populate('records', {
+		title: 1,
+		year: 1,
+		genre: 1,
+	});
+	if (artist) {
+		res.json(artist.records);
+	} else {
+		res.status(404).end();
+	}
+});
+
 artistsRouter.post('/', async (req, res, next) => {
 	const { name, origin, desc, spotifyId } = req.body;
 

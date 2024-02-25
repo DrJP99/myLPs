@@ -2,9 +2,9 @@ import React from 'react';
 import { getOne } from '../services/albums';
 import { useParams, useNavigate } from 'react-router';
 import { deleteOne } from '../services/albums';
-import { Link } from 'react-router-dom';
+import ArtistComponent from './ArtistComponent';
 
-const Album = ({ data }) => {
+const Album = ({ data, inModal = false }) => {
 	// The Album is the page that displays all the information of a single album
 
 	const [album, setAlbum] = React.useState(data || null);
@@ -24,13 +24,13 @@ const Album = ({ data }) => {
 		deleteOne(id).then(() => navigate('/'));
 	};
 
+	console.log('Albunm; im-modal:', inModal);
+
 	return album ? (
 		<div>
 			<h1>{album.title}</h1>
-			<Link to={'/artist/' + album.artist.id}>
-				<p>{album.artist.name}</p>
-			</Link>
 			<p>{album.year}</p>
+			<ArtistComponent artist={album.artist} inModal={inModal} />
 			<p>
 				<button onClick={handleDelete}>Delete</button>
 			</p>

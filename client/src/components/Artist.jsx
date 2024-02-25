@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Navigate, useParams } from 'react-router';
-import { getOne } from '../services/artists';
-import { Link } from 'react-router-dom';
+import { getArtistAlbums, getOne } from '../services/artists';
+import AlbumComponent from './AlbumComponent';
 
-const Artist = ({ data }) => {
+const Artist = ({ data, inModal = false }) => {
 	const { id } = useParams();
 	const [artist, setArtist] = useState(data);
 
@@ -13,7 +13,14 @@ const Artist = ({ data }) => {
 				.then((data) => setArtist(data))
 				.catch(() => Navigate('/artists'));
 		}
-	}, [id]);
+		if (artist && !artist.records) {
+			getArtistAlbums(artist.id).then((data) => {
+				setArtist({ ...artist, records: data });
+			});
+		}
+	}, [id, artist]);
+
+	console.log('Artist; in-modal:', inModal);
 
 	return artist ? (
 		<div>
@@ -21,13 +28,19 @@ const Artist = ({ data }) => {
 			<p>{artist.origin}</p>
 			<p>{artist.desc}</p>
 			<h3 className="header-3">Records:</h3>
-			<ul>
-				{artist.records.map((records) => (
-					<li key={records.id}>
-						<Link to={'/album/' + records.id}>{records.title}</Link>
-					</li>
-				))}
-			</ul>
+			{artist.records ? (
+				<div className="grid-container">
+					{artist.records.map((record) => (
+						<AlbumComponent
+							album={{ ...record, artist: artist }}
+							key={record.id}
+							inModal={inModal}
+						/>
+					))}
+				</div>
+			) : (
+				<p>Loading...</p>
+			)}
 		</div>
 	) : (
 		<p>Loading...</p>

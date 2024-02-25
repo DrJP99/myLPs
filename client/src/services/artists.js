@@ -12,6 +12,11 @@ export const getOne = (id) => {
 	return request.then((response) => response.data);
 };
 
+export const getArtistAlbums = (id) => {
+	const request = axios.get(`${baseUrl}/${id}/records`);
+	return request.then((response) => response.data);
+};
+
 export const create = async (newObject) => {
 	const config = {
 		headers: { Authorization: getToken() },

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Modal from './Modal';
 import Artist from './Artist';
 
-const ArtistComponent = ({ artist }) => {
+const ArtistComponent = ({ artist, inModal = false }) => {
 	const [modalShow, setModalShow] = useState(false);
 
 	const handleShowModal = (e) => {
@@ -21,17 +21,23 @@ const ArtistComponent = ({ artist }) => {
 		<>
 			{modalShow && (
 				<Modal setDisplay={setDisplay}>
-					<Artist data={artist} />
+					<Artist data={artist} inModal={true} />
 				</Modal>
 			)}
 			<div className="card-container">
 				<div className="card">
-					<Link to={''} onClick={handleShowModal}>
+					<Link
+						to={'/artist/' + artist.id}
+						onClick={!inModal && handleShowModal}
+					>
 						<div className="image-artist"></div>
 					</Link>
 					<div className="card-headers">
 						<p className="card-title text-center">
-							<Link to={''} onClick={handleShowModal}>
+							<Link
+								to={'/artist/' + artist.id}
+								onClick={!inModal && handleShowModal}
+							>
 								{artist.name}
 							</Link>
 						</p>

@@ -23,6 +23,9 @@ const NavBar = () => {
 				<Link to="/artists" className="navbar-item">
 					<li>Artists</li>
 				</Link>
+				<Link to="/about" className="navbar-item">
+					<li>About</li>
+				</Link>
 				{user ? (
 					<>
 						<Link to="/add/album" className="navbar-item">
