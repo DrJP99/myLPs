@@ -3,6 +3,7 @@ import { getAll } from '../services/albums';
 import AlbumComponent from './AlbumComponent';
 
 const Albums = () => {
+	// Home page
 	const [albumData, setAlbumData] = React.useState(null);
 
 	React.useEffect(() => {
