@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router';
 import { deleteOne } from '../services/albums';
 import ArtistComponent from './ArtistComponent';
 
-const Album = ({ data, inModal = false }) => {
+const Album = ({ data, inHome = false, handleCloseParent }) => {
 	// The Album is the page that displays all the information of a single album
 
 	const [album, setAlbum] = React.useState(data || null);
@@ -24,13 +24,11 @@ const Album = ({ data, inModal = false }) => {
 		deleteOne(id).then(() => navigate('/'));
 	};
 
-	console.log('Albunm; im-modal:', inModal);
-
 	return album ? (
 		<div>
 			<h1>{album.title}</h1>
 			<p>{album.year}</p>
-			<ArtistComponent artist={album.artist} inModal={inModal} />
+			<ArtistComponent artist={album.artist} openModal={inHome} />
 			<p>
 				<button onClick={handleDelete}>Delete</button>
 			</p>

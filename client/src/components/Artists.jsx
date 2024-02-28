@@ -7,7 +7,13 @@ const Artists = () => {
 
 	useEffect(() => {
 		// TODO: add persistent data to avoid unnecessary API calls
-		getAll().then((data) => setArtists(data));
+		getAll().then((data) =>
+			setArtists(
+				data.filter((artist) => {
+					return artist.records.length !== 0;
+				}),
+			),
+		);
 	}, []);
 
 	console.log(artists);
@@ -18,7 +24,11 @@ const Artists = () => {
 			<div className="grid-container">
 				{artists ? (
 					artists.map((artist) => (
-						<ArtistComponent key={artist.id} artist={artist} />
+						<ArtistComponent
+							key={artist.id}
+							artist={artist}
+							openModal
+						/>
 					))
 				) : (
 					<p>Loading...</p>

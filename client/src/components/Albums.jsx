@@ -17,7 +17,11 @@ const Albums = () => {
 			<div className="grid-container">
 				{albumData ? (
 					albumData.map((album) => (
-						<AlbumComponent album={album} key={album.id} />
+						<AlbumComponent
+							album={album}
+							key={album.id}
+							openModal
+						/>
 					))
 				) : (
 					<p>Loading...</p>

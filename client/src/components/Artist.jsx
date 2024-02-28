@@ -3,7 +3,7 @@ import { Navigate, useParams } from 'react-router';
 import { getArtistAlbums, getOne } from '../services/artists';
 import AlbumComponent from './AlbumComponent';
 
-const Artist = ({ data, inModal = false }) => {
+const Artist = ({ data, inHome = false, handleCloseParent }) => {
 	const { id } = useParams();
 	const [artist, setArtist] = useState(data);
 
@@ -20,8 +20,6 @@ const Artist = ({ data, inModal = false }) => {
 		}
 	}, [id, artist]);
 
-	console.log('Artist; in-modal:', inModal);
-
 	return artist ? (
 		<div>
 			<h2 className="header-2">{artist.name}</h2>
@@ -34,7 +32,7 @@ const Artist = ({ data, inModal = false }) => {
 						<AlbumComponent
 							album={{ ...record, artist: artist }}
 							key={record.id}
-							inModal={inModal}
+							openModal={inHome}
 						/>
 					))}
 				</div>

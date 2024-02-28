@@ -1,10 +1,10 @@
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Modal from './Modal';
 import { useState } from 'react';
 import Album from './Album';
 
-const AlbumComponent = ({ album, inModal = false }) => {
+const AlbumComponent = ({ album, openModal = false }) => {
 	// The Album Component renders the basic information of an album on the Albums page
 
 	const [modalShow, setModalShow] = useState(false);
@@ -12,9 +12,11 @@ const AlbumComponent = ({ album, inModal = false }) => {
 
 	const handleShowModal = (e) => {
 		e.preventDefault();
-		if (!inModal) {
+		if (openModal) {
 			setDisplay(true);
 		} else {
+			// handleCloseParent();
+			console.log('trying to navigate');
 			navigate('/album/' + album.id);
 		}
 	};
@@ -27,7 +29,7 @@ const AlbumComponent = ({ album, inModal = false }) => {
 
 	return (
 		<>
-			{modalShow && (
+			{openModal && modalShow && (
 				<Modal setDisplay={setDisplay}>
 					<Album data={album} inModal />
 				</Modal>
