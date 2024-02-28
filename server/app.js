@@ -4,6 +4,7 @@ const config = require('./utils/config');
 
 const logger = require('./utils/logger');
 const middleware = require('./utils/middleware');
+const fileuploader = require('express-fileupload');
 
 app.use(middleware.tokenExtractor);
 
@@ -30,6 +31,7 @@ mongoose
 app.use(express.json());
 app.use(express.static('build'));
 app.use(middleware.requestLogger);
+app.use(fileuploader());
 
 app.use('/api/records', middleware.userExtractor, recordsRouter);
 app.use('/api/artists', middleware.userExtractor, artistsRouter);

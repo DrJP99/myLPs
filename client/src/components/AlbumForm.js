@@ -9,6 +9,7 @@ const AlbumForm = () => {
 	const [allArtists, setAllArtists] = useState([]);
 	const [year, setYear] = useState('');
 	const [comment, setComment] = useState('');
+	const [file, setFile] = useState();
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -22,11 +23,13 @@ const AlbumForm = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		console.log('file: ', file);
 		const newAlbum = {
 			title: title,
 			artist: artist,
 			year: year,
 			comment: comment,
+			cover: file,
 		};
 
 		create(newAlbum)
@@ -69,7 +72,11 @@ const AlbumForm = () => {
 						onChange={({ target }) => setYear(target.value)}
 					/>
 					<label htmlFor="cover">Cover</label>
-					<input type="file" name="cover" />
+					<input
+						type="file"
+						name="cover"
+						onChange={({ target }) => setFile(target.files[0])}
+					/>
 
 					<label htmlFor="comment">Comments (optional)</label>
 					<textarea

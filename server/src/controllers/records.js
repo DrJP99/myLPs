@@ -49,9 +49,9 @@ recordsRouter.post('/', async (req, res) => {
 		title: title,
 		artist: albumArtist.id,
 		year: year,
-		cover: myCover,
 		genre: genre,
 		spotifyId: spotifyId,
+		cover: myCover,
 	});
 
 	albumArtist.records = albumArtist.records.concat(newRecord.id);
@@ -67,7 +67,7 @@ recordsRouter.post('/', async (req, res) => {
 	);
 });
 
-recordsRouter.delete('/:id', async (req, res) => {
+recordsRouter.delete('/:id', async (req, res, next) => {
 	const user = req.user;
 	if (!user) {
 		return res
@@ -76,7 +76,9 @@ recordsRouter.delete('/:id', async (req, res) => {
 			.end();
 	}
 
-	const record = await Record.findById(req.params.id);
+	const record = await Record.findById(req.params.id).catch((e) => {
+		return res.status(404).json({ error: 'record not found' }).end();
+	});
 
 	await Record.findByIdAndDelete(req.params.id);
 	res.status(204).end();

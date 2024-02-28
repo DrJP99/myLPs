@@ -21,7 +21,7 @@ const Album = ({ data, inHome = false, handleCloseParent }) => {
 
 	const handleDelete = (e) => {
 		e.preventDefault();
-		deleteOne(id).then(() => navigate('/'));
+		deleteOne(album.id).then(() => navigate('/'));
 	};
 
 	return album ? (
