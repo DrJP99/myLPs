@@ -20,7 +20,10 @@ recordsRouter.get('/:id', async (req, res) => {
 });
 
 recordsRouter.post('/', async (req, res) => {
-	const { title, artist, year, cover, genre, spotifyId } = req.body;
+	const { title, artist, year, genre, spotifyId } = req.body;
+	const { cover } = req.files;
+
+	console.log('cover:', cover);
 
 	const user = req.user;
 	if (!user) {
@@ -37,10 +40,9 @@ recordsRouter.post('/', async (req, res) => {
 
 	let myCover = null;
 	if (cover) {
-		let img = fs.readFileSync(cover.path);
-		let encode_img = img.toString('base64');
+		const img = cover.data;
 		myCover = {
-			data: new Buffer.from(encode_img, 'base64'),
+			data: new Buffer.from(img, 'base64'),
 			contentType: 'image/png',
 		};
 	}
