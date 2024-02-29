@@ -2,6 +2,7 @@ const recordsRouter = require('express').Router();
 const Record = require('../models/record');
 const Artist = require('../models/artist');
 const fs = require('fs');
+const Image = require('../../utils/image.js');
 
 recordsRouter.get('/', async (req, res) => {
 	const records = await Record.find({}).populate('artist', {
@@ -23,8 +24,6 @@ recordsRouter.post('/', async (req, res) => {
 	const { title, artist, year, genre, spotifyId } = req.body;
 	const { cover } = req.files;
 
-	console.log('cover:', cover);
-
 	const user = req.user;
 	if (!user) {
 		return res
@@ -38,13 +37,8 @@ recordsRouter.post('/', async (req, res) => {
 		return res.status(400).json({ error: 'Invalid artist' });
 	}
 
-	let myCover = null;
-	if (cover) {
-		const img = cover.data;
-		myCover = {
-			data: new Buffer.from(img, 'base64'),
-			contentType: 'image/png',
-		};
+	if (!cover) {
+		return res.status(400).json({ error: 'Must include cover image' });
 	}
 
 	const newRecord = new Record({
@@ -53,10 +47,12 @@ recordsRouter.post('/', async (req, res) => {
 		year: year,
 		genre: genre,
 		spotifyId: spotifyId,
-		cover: myCover,
+		cover: cover ? await Image.compressImg(cover) : undefined,
 	});
 
-	albumArtist.records = albumArtist.records.concat(newRecord.id);
+	console.log(newRecord);
+
+	albumArtist.records = albumArtist.records.concat(await newRecord.id);
 	await albumArtist.save();
 
 	const savedRecord = await newRecord.save();

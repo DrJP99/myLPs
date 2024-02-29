@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Modal from './Modal';
 import { useState } from 'react';
 import Album from './Album';
+import { decodeImage } from '../utils/image';
 
 const AlbumComponent = ({ album, openModal = false }) => {
 	// The Album Component renders the basic information of an album on the Albums page
@@ -37,7 +38,19 @@ const AlbumComponent = ({ album, openModal = false }) => {
 			<div className="card-container">
 				<div className="card">
 					<Link to={'/album/' + album.id} onClick={handleShowModal}>
-						<div className="image-cover"></div>
+						{/* <div
+							className="image-cover"
+							style={{
+								backgroundImage: ,
+							}}
+						></div> */}
+						<img
+							src={`data:image/png;base64,${decodeImage(
+								album.cover,
+							)}`}
+							className="image-cover"
+							alt={`${album.title} cover`}
+						/>
 					</Link>
 					<div className="card-headers">
 						<p className="card-title">

@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router';
 import { deleteOne } from '../services/albums';
 import ArtistComponent from './ArtistComponent';
 import { useSelector } from 'react-redux';
-import { decodeImage } from './utils/image';
+import { decodeImage } from '../utils/image';
 
 const Album = ({ data, inHome = false, handleCloseParent }) => {
 	// The Album is the page that displays all the information of a single album
