@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Navigate, useParams } from 'react-router';
 import { getArtistAlbums, getOne } from '../services/artists';
 import AlbumComponent from './AlbumComponent';
@@ -6,6 +7,8 @@ import AlbumComponent from './AlbumComponent';
 const Artist = ({ data, inHome = false, handleCloseParent }) => {
 	const { id } = useParams();
 	const [artist, setArtist] = useState(data);
+
+	const user = useSelector((state) => state.user);
 
 	useEffect(() => {
 		if (!artist) {
@@ -38,6 +41,16 @@ const Artist = ({ data, inHome = false, handleCloseParent }) => {
 				</div>
 			) : (
 				<p>Loading...</p>
+			)}
+			{user && (
+				<p>
+					<button
+						className="button"
+						onClick={() => console.log('try to delete...')}
+					>
+						Delete
+					</button>
+				</p>
 			)}
 		</div>
 	) : (

@@ -3,6 +3,7 @@ import { getOne } from '../services/albums';
 import { useParams, useNavigate } from 'react-router';
 import { deleteOne } from '../services/albums';
 import ArtistComponent from './ArtistComponent';
+import { useSelector } from 'react-redux';
 
 const Album = ({ data, inHome = false, handleCloseParent }) => {
 	// The Album is the page that displays all the information of a single album
@@ -10,6 +11,7 @@ const Album = ({ data, inHome = false, handleCloseParent }) => {
 	const [album, setAlbum] = React.useState(data || null);
 	const { id } = useParams();
 	const navigate = useNavigate();
+	const user = useSelector((state) => state.user);
 
 	React.useEffect(() => {
 		if (!album) {
@@ -28,10 +30,16 @@ const Album = ({ data, inHome = false, handleCloseParent }) => {
 		<div>
 			<h1>{album.title}</h1>
 			<p>{album.year}</p>
+			{/* {album.cover && <image  />} */}
 			<ArtistComponent artist={album.artist} openModal={inHome} />
-			<p>
-				<button onClick={handleDelete}>Delete</button>
-			</p>
+
+			{user && (
+				<p>
+					<button className="button" onClick={handleDelete}>
+						Delete
+					</button>
+				</p>
+			)}
 		</div>
 	) : (
 		<p>Loading...</p>
