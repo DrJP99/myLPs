@@ -23,7 +23,7 @@ recordsRouter.get('/:id', async (req, res) => {
 });
 
 recordsRouter.post('/', async (req, res) => {
-	const { title, artist, year, genre, spotifyId } = req.body;
+	const { title, artist, year, genre, spotifyId, comment } = req.body;
 	const { cover } = req.files;
 
 	const user = req.user;
@@ -49,6 +49,7 @@ recordsRouter.post('/', async (req, res) => {
 		year: year,
 		genre: genre,
 		spotifyId: spotifyId,
+		comment: comment !== '' ? comment : undefined,
 		cover: cover ? await Image.compressImg(cover) : undefined,
 	});
 

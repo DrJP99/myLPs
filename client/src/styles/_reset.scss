@@ -324,3 +324,48 @@ $image-size: 250px;
 		}
 	}
 }
+
+.item-header {
+	display: flex;
+
+	.item-image {
+		width: $image-size;
+		height: $image-size;
+		margin: 15px;
+	}
+
+	.item-image.album-cover {
+		border-radius: $border-radius;
+	}
+
+	.item-header-titles {
+		align-self: center;
+		padding: 20px;
+
+		.item-title {
+			font-size: 4em;
+		}
+
+		.item-subtitle {
+			font-style: italic;
+			margin: 0;
+			&:before {
+				content: '(';
+			}
+			&:after {
+				content: ')';
+			}
+		}
+	}
+
+	
+}
+
+.item-info {
+	margin: 0;
+	padding: 15px;
+
+	p {
+		margin: 0;
+	}
+}

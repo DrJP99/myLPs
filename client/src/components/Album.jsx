@@ -5,6 +5,7 @@ import { deleteOne } from '../services/albums';
 import ArtistComponent from './ArtistComponent';
 import { useSelector } from 'react-redux';
 import { decodeImage } from '../utils/image';
+import { Link } from 'react-router-dom';
 
 const Album = ({ data, inHome = false, handleCloseParent }) => {
 	// The Album is the page that displays all the information of a single album
@@ -34,12 +35,28 @@ const Album = ({ data, inHome = false, handleCloseParent }) => {
 	};
 
 	return album ? (
-		<div>
-			<h1>{album.title}</h1>
-			<p>{album.year}</p>
-			{album.cover && (
-				<img src={`data:image/png;base64,${coverImg}`} alt="cover" />
+		<div className="album">
+			<div className="item-header">
+				<Link to={!inHome && `/album/${album.id}`}>
+					<img
+						src={`data:image/png;base64,${coverImg}`}
+						alt="cover"
+						className="item-image album-cover"
+					/>
+				</Link>
+				<div className="item-header-titles">
+					<Link to={!inHome && `/album/${album.id}`}>
+						<h1 className="item-title">{album.title}</h1>
+					</Link>
+					<p className="item-subtitle">{album.year}</p>
+				</div>
+			</div>
+			{album.comment && (
+				<div className="item-info">
+					<p>{album.comment}</p>
+				</div>
 			)}
+
 			<ArtistComponent artist={album.artist} openModal={inHome} />
 
 			{user && (
