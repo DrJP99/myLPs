@@ -8,6 +8,7 @@ recordsRouter.get('/', async (req, res) => {
 	const records = await Record.find({}).populate('artist', {
 		name: 1,
 		origin: 1,
+		portrait: 1,
 	});
 	res.json(records);
 });
@@ -16,6 +17,7 @@ recordsRouter.get('/:id', async (req, res) => {
 	const record = await Record.findById(req.params.id).populate('artist', {
 		name: 1,
 		origin: 1,
+		portrait: 1,
 	});
 	res.json(record);
 });

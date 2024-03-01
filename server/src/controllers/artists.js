@@ -8,6 +8,7 @@ artistsRouter.get('/', async (req, res, next) => {
 		title: 1,
 		year: 1,
 		genre: 1,
+		cover: 1,
 	});
 	res.json(artists);
 });
@@ -17,6 +18,7 @@ artistsRouter.get('/:id', async (req, res, next) => {
 		title: 1,
 		year: 1,
 		genre: 1,
+		cover: 1,
 	});
 	if (artist) {
 		res.json(artist);
