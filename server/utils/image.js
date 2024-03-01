@@ -4,8 +4,8 @@ const compressImg = async (img) => {
 	return Jimp.read(new Buffer.from(img.data))
 		.then(async (res) => {
 			const data = await res
-				.resize(250, 250)
-				.quality(60)
+				.cover(400, 400)
+				.quality(80)
 				.clone()
 				.getBufferAsync(img.mimetype);
 			console.log(data);
