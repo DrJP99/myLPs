@@ -10,7 +10,6 @@ const NavBar = () => {
 
 	const handleThemeChange = (e) => {
 		e.preventDefault();
-		console.log('changing theme');
 		dispatch(changeTheme());
 	};
 

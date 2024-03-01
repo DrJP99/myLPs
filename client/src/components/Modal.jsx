@@ -6,7 +6,6 @@ const Modal = ({ setDisplay, children }) => {
 
 	// window.addEventListener('keydown', (e) => {
 	// 	if (e.key === 'Escape') {
-	// 		console.log('Escape...');
 	// 	}
 	// });
 

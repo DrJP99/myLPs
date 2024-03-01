@@ -13,7 +13,6 @@ const Admin = () => {
 		dispatch(clearToken());
 	};
 
-	console.log(user);
 	return (
 		<div>
 			<h1 className="header-1">Admin</h1>

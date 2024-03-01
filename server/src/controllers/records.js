@@ -53,8 +53,6 @@ recordsRouter.post('/', async (req, res) => {
 		cover: cover ? await Image.compressImg(cover) : undefined,
 	});
 
-	console.log(newRecord);
-
 	albumArtist.records = albumArtist.records.concat(await newRecord.id);
 	await albumArtist.save();
 

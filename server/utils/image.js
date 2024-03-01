@@ -8,7 +8,6 @@ const compressImg = async (img) => {
 				.quality(80)
 				.clone()
 				.getBufferAsync(img.mimetype);
-			console.log(data);
 			return {
 				data: data,
 				contentType: img.mimetype,

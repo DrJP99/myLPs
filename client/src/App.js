@@ -25,7 +25,6 @@ function App() {
 	useEffect(() => {
 		dispatch(readSavedTheme());
 		readLocalStorage().then((userInfo) => {
-			console.log('user info:', userInfo);
 			if (userInfo) {
 				dispatch(setUser(userInfo.username));
 				dispatch(setToken(userInfo.token));
@@ -35,8 +34,6 @@ function App() {
 			}
 		});
 	}, [dispatch]);
-
-	console.log(theme);
 
 	return (
 		<div className={'app ' + theme}>

@@ -16,8 +16,6 @@ const Artists = () => {
 		);
 	}, []);
 
-	console.log(artists);
-
 	return (
 		<div>
 			<h1 className="header-1">Artists</h1>

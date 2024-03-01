@@ -15,7 +15,6 @@ const ArtistComponent = ({ artist, openModal = false }) => {
 			setDisplay(true);
 		} else {
 			// handleCloseParent();
-			console.log('trying to navigate');
 			navigate('/artist/' + artist.id);
 		}
 	};

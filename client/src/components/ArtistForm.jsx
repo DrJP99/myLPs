@@ -18,8 +18,6 @@ const ArtistForm = () => {
 			portrait: file,
 		};
 
-		console.log(newArtist);
-
 		create(newArtist)
 			.then((data) => {
 				navigate('/artist/' + data.id);

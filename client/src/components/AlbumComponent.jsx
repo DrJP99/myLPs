@@ -17,7 +17,6 @@ const AlbumComponent = ({ album, openModal = false }) => {
 			setDisplay(true);
 		} else {
 			// handleCloseParent();
-			console.log('trying to navigate');
 			navigate('/album/' + album.id);
 		}
 	};
