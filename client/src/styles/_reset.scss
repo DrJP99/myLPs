@@ -338,6 +338,10 @@ $image-size: 250px;
 		border-radius: $border-radius;
 	}
 
+	.item-image.artist-portrait {
+		border-radius: 50%;
+	}
+
 	.item-header-titles {
 		align-self: center;
 		padding: 20px;

@@ -3,10 +3,13 @@ import { useSelector } from 'react-redux';
 import { Navigate, useParams } from 'react-router';
 import { getArtistAlbums, getOne } from '../services/artists';
 import AlbumComponent from './AlbumComponent';
+import { decodeImage } from '../utils/image';
+import { Link } from 'react-router-dom';
 
 const Artist = ({ data, inHome = false, handleCloseParent }) => {
 	const { id } = useParams();
 	const [artist, setArtist] = useState(data);
+	const [portraitImg, setPortraitImg] = useState();
 
 	const user = useSelector((state) => state.user);
 
@@ -21,13 +24,33 @@ const Artist = ({ data, inHome = false, handleCloseParent }) => {
 				setArtist({ ...artist, records: data });
 			});
 		}
+		if (artist && artist.portrait !== undefined) {
+			setPortraitImg(decodeImage(artist.portrait));
+		}
 	}, [id, artist]);
 
 	return artist ? (
-		<div>
-			<h2 className="header-2">{artist.name}</h2>
-			<p>{artist.origin}</p>
-			<p>{artist.desc}</p>
+		<div className="artist">
+			<div className="item-header">
+				<Link to={!inHome && `/artist/${artist.id}`}>
+					<img
+						src={`data:image/png;base64,${portraitImg}`}
+						alt={`${artist.name} portrait`}
+						className="item-image artist-portrait"
+					/>
+				</Link>
+				<div className="item-header-titles">
+					<Link to={!inHome && `/artist/${artist.id}`}>
+						<h1 className="item-title">{artist.name}</h1>
+					</Link>
+					<p className="item-subtitle">{artist.origin}</p>
+				</div>
+			</div>
+			{artist.desc && (
+				<div className="item-info">
+					<p>{artist.desc}</p>
+				</div>
+			)}
 			<h3 className="header-3">Records:</h3>
 			{artist.records ? (
 				<div className="grid-container">
