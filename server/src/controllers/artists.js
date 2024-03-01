@@ -1,5 +1,7 @@
 const artistsRouter = require('express').Router();
 const Artist = require('../models/artist');
+const fs = require('fs');
+const Image = require('../../utils/image');
 
 artistsRouter.get('/', async (req, res, next) => {
 	const artists = await Artist.find({}).populate('records', {
@@ -38,6 +40,7 @@ artistsRouter.get('/:id/records', async (req, res, next) => {
 
 artistsRouter.post('/', async (req, res, next) => {
 	const { name, origin, desc, spotifyId } = req.body;
+	const { portrait } = req.files;
 
 	const user = req.user;
 	if (!user) {
@@ -47,12 +50,17 @@ artistsRouter.post('/', async (req, res, next) => {
 			.end();
 	}
 
+	if (!portrait) {
+		return res.status(400).json({ error: 'must include portrait image' });
+	}
+
 	const newArtist = new Artist({
 		name: name,
 		origin: origin,
 		desc: desc,
 		spotifyId: spotifyId,
 		records: [],
+		portrait: await Image.compressImg(portrait),
 	});
 
 	const savedArtist = await newArtist.save().catch((err) => {

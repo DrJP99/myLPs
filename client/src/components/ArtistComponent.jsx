@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Modal from './Modal';
 import Artist from './Artist';
+import { decodeImage } from '../utils/image';
 
 const ArtistComponent = ({ artist, openModal = false }) => {
 	const [modalShow, setModalShow] = useState(false);
@@ -35,7 +36,13 @@ const ArtistComponent = ({ artist, openModal = false }) => {
 			<div className="card-container">
 				<div className="card">
 					<Link to={'/artist/' + artist.id} onClick={handleShowModal}>
-						<div className="image-artist"></div>
+						<img
+							src={`data:image/png;base64,${decodeImage(
+								artist.portrait,
+							)}`}
+							alt={`${artist.name} portrait`}
+							className="image-artist"
+						/>
 					</Link>
 					<div className="card-headers">
 						<p className="card-title text-center">

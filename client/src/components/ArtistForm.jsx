@@ -6,6 +6,7 @@ const ArtistForm = () => {
 	const [name, setName] = useState('');
 	const [origin, setOrigin] = useState('');
 	const [desc, setDesc] = useState('');
+	const [file, setFile] = useState();
 	const navigate = useNavigate();
 
 	const handleSubmit = async (e) => {
@@ -14,7 +15,10 @@ const ArtistForm = () => {
 			name: name,
 			origin: origin,
 			desc: desc,
+			portrait: file,
 		};
+
+		console.log(newArtist);
 
 		create(newArtist)
 			.then((data) => {
@@ -47,7 +51,13 @@ const ArtistForm = () => {
 						onChange={({ target }) => setOrigin(target.value)}
 					/>
 					<label htmlFor="portrait">Portrait Image</label>
-					<input type="file" id="portrait" name="portrait" />
+					<input
+						type="file"
+						id="portrait"
+						name="portrait"
+						onChange={({ target }) => setFile(target.files[0])}
+					/>
+
 					<label htmlFor="desc">Description (optional)</label>
 					<textarea
 						value={desc}

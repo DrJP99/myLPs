@@ -2,7 +2,7 @@ const recordsRouter = require('express').Router();
 const Record = require('../models/record');
 const Artist = require('../models/artist');
 const fs = require('fs');
-const Image = require('../../utils/image.js');
+const Image = require('../../utils/image');
 
 recordsRouter.get('/', async (req, res) => {
 	const records = await Record.find({}).populate('artist', {

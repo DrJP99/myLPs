@@ -23,7 +23,6 @@ const AlbumForm = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		console.log('file: ', file);
 		const newAlbum = {
 			title: title,
 			artist: artist,

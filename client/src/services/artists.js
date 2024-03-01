@@ -19,7 +19,10 @@ export const getArtistAlbums = (id) => {
 
 export const create = async (newObject) => {
 	const config = {
-		headers: { Authorization: getToken() },
+		headers: {
+			Authorization: getToken(),
+			'Content-Type': 'multipart/form-data',
+		},
 	};
 	const res = await axios.post(baseUrl, newObject, config);
 	return res.data;

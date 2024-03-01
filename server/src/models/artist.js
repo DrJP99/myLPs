@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const uniqueValidator = require("mongoose-unique-validator");
+const mongoose = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
 
 const artistSchema = new mongoose.Schema({
 	name: {
@@ -19,17 +19,21 @@ const artistSchema = new mongoose.Schema({
 		type: String,
 		required: false,
 	},
+	portrait: {
+		data: Buffer,
+		contentType: String,
+	},
 	records: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
-			ref: "Record",
+			ref: 'Record',
 		},
 	],
 });
 
 artistSchema.plugin(uniqueValidator);
 
-artistSchema.set("toJSON", {
+artistSchema.set('toJSON', {
 	transform: (document, returnedObject) => {
 		returnedObject.id = returnedObject._id.toString();
 		delete returnedObject._id;
@@ -37,4 +41,4 @@ artistSchema.set("toJSON", {
 	},
 });
 
-module.exports = mongoose.model("Artist", artistSchema);
+module.exports = mongoose.model('Artist', artistSchema);
