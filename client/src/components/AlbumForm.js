@@ -38,6 +38,12 @@ const AlbumForm = () => {
 			});
 	};
 
+	const handleChangeYear = (e) => {
+		const re = /[^0-9]/g;
+		let yr = e.target.value.replace(re, '');
+		setYear(yr);
+	};
+
 	return (
 		<div>
 			<h1 className="header-1">Add new album</h1>
@@ -67,11 +73,10 @@ const AlbumForm = () => {
 					</select>
 					<label htmlFor="year">Year</label>
 					<input
-						type="number"
-						value={year}
 						id="year"
 						name="year"
-						onChange={({ target }) => setYear(target.value)}
+						value={year}
+						onChange={handleChangeYear}
 					/>
 					<label htmlFor="cover">Cover</label>
 					<input
