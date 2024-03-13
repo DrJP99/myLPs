@@ -50,6 +50,7 @@ function App() {
 					<Route path="/artist/:id" element={<Artist />} />
 					<Route path="/admin" element={<Admin />} />
 					<Route path="/about" element={<About />} />
+					<Route path="*" element={<Navigate to="/" />} />
 				</Routes>
 			</div>
 		</div>

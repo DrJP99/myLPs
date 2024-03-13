@@ -19,7 +19,9 @@ const Admin = () => {
 			{user ? (
 				<div>
 					<p>{user} logged in</p>
-					<button onClick={handleLogout}>Logout</button>
+					<button className="button" onClick={handleLogout}>
+						Logout
+					</button>
 				</div>
 			) : (
 				<LoginForm />
