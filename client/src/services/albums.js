@@ -3,14 +3,16 @@ import { getToken } from './users';
 
 const baseUrl = '/api/records';
 
-const getAll = () => {
+const getAll = async () => {
 	const request = axios.get(baseUrl);
-	return request.then((response) => response.data);
+	const response = await request;
+	return response.data;
 };
 
-const getOne = (id) => {
+const getOne = async (id) => {
 	const request = axios.get(`${baseUrl}/${id}`);
-	return request.then((response) => response.data);
+	const response = await request;
+	return response.data;
 };
 
 const create = async (newObject) => {

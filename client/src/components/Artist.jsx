@@ -1,33 +1,44 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Navigate, useParams } from 'react-router';
-import { getArtistAlbums, getOne } from '../services/artists';
+import { useParams, useNavigate } from 'react-router';
 import AlbumComponent from './AlbumComponent';
 import { decodeImage } from '../utils/image';
 import { Link } from 'react-router-dom';
 
 const Artist = ({ data, inHome = false, handleCloseParent }) => {
+	const artists = useSelector((state) => state.artists);
+	const albums = useSelector((state) => state.albums);
+
 	const { id } = useParams();
 	const [artist, setArtist] = useState(data);
 	const [portraitImg, setPortraitImg] = useState();
 
+	const navigate = useNavigate();
+
 	const user = useSelector((state) => state.user);
 
 	useEffect(() => {
-		if (!artist) {
-			getOne(id)
-				.then((data) => setArtist(data))
-				.catch(() => Navigate('/artists'));
+		if (!artist && artists) {
+			const myId = data ? data.id : id;
+			const newArtist = artists.find((artist) => artist.id === myId);
+			if (!newArtist) {
+				console.error(
+					`Artist with id ${myId} could not be found. Redirecting to artists page...`,
+				);
+				navigate('/artists');
+			}
+			setArtist(newArtist);
 		}
 		if (artist && !artist.records) {
-			getArtistAlbums(artist.id).then((data) => {
-				setArtist({ ...artist, records: data });
-			});
+			const artistAlbums = albums.filter(
+				(album) => album.artist.id === artist.id,
+			);
+			setArtist({ ...artist, records: artistAlbums });
 		}
 		if (artist && artist.portrait !== undefined) {
 			setPortraitImg(decodeImage(artist.portrait));
 		}
-	}, [id, artist]);
+	}, [id, artist, artists, data, albums, navigate]);
 
 	return artist ? (
 		<div className="artist">

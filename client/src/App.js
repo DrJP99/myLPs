@@ -12,10 +12,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { clearUser, setUser } from './app/userSlice';
 import { clearToken, setToken } from './app/tokenSlice';
 import Artists from './components/Artists';
+import { getAll as getAlbums } from './services/albums';
+import { getAll as getArtists } from './services/artists';
 
 import './styles/index.scss';
 import { readSavedTheme } from './app/themeSlice';
 import About from './components/About';
+import { setAlbums } from './app/albumsSlice';
+import { setArtists } from './app/artistsSlice';
 
 function App() {
 	const dispatch = useDispatch();
@@ -33,6 +37,9 @@ function App() {
 				dispatch(clearToken());
 			}
 		});
+
+		getAlbums().then((data) => dispatch(setAlbums(data)));
+		getArtists().then((data) => dispatch(setArtists(data)));
 	}, [dispatch]);
 
 	return (

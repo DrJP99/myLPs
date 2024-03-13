@@ -1,15 +1,16 @@
 import React from 'react';
-import { getAll } from '../services/albums';
+import { useSelector } from 'react-redux';
 import AlbumComponent from './AlbumComponent';
 
 const Albums = () => {
 	// Home page
 	const [albumData, setAlbumData] = React.useState(null);
+	const albums = useSelector((state) => state.albums);
 
 	React.useEffect(() => {
 		// TODO: add persistent data to avoid unnecessary API calls
-		getAll().then((data) => setAlbumData(data));
-	}, []);
+		setAlbumData(albums);
+	}, [albums]);
 
 	return (
 		<div>

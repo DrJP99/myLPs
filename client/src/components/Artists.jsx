@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getAll } from '../services/artists';
 import ArtistComponent from './ArtistComponent';
 
 const Artists = () => {
 	const user = useSelector((state) => state.user);
-	const [artists, setArtists] = useState(null);
+	const artists = useSelector((state) => state.artists);
+
+	const [artistData, setArtistData] = useState(null);
 	const [filteredArtists, setFilteredArtists] = useState(null);
 	const [filter, setFilter] = useState(true); // true = shows only artists with records
 
@@ -16,28 +17,23 @@ const Artists = () => {
 
 	useEffect(() => {
 		// TODO: add persistent data to avoid unnecessary API calls
-		getAll().then((data) => {
-			setArtists(data);
-			setFilteredArtists(
-				data.filter((artist) => artist.records.length !== 0),
-			);
-		});
-	}, []);
+		setArtistData(artists);
+	}, [artists]);
 
 	useEffect(() => {
 		const filterList = (option) => {
-			if (artists) {
+			if (artistData) {
 				setFilteredArtists(
 					option
-						? artists.filter(
+						? artistData.filter(
 								(artist) => artist.records.length !== 0,
 						  )
-						: artists,
+						: artistData,
 				);
 			}
 		};
 		filterList(filter);
-	}, [filter, artists]);
+	}, [filter, artistData]);
 
 	return (
 		<div>
@@ -51,7 +47,7 @@ const Artists = () => {
 			) : null}
 
 			<div className="grid-container">
-				{artists ? (
+				{filteredArtists ? (
 					filteredArtists.map((artist) => (
 						<ArtistComponent
 							key={artist.id}

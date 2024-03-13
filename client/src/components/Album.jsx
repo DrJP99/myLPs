@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { getOne } from '../services/albums';
 import { useParams, useNavigate } from 'react-router';
 import { deleteOne } from '../services/albums';
 import ArtistComponent from './ArtistComponent';
@@ -9,25 +8,30 @@ import { Link } from 'react-router-dom';
 
 const Album = ({ data, inHome = false, handleCloseParent }) => {
 	// The Album is the page that displays all the information of a single album
+	const albums = useSelector((state) => state.albums);
 
-	const [album, setAlbum] = useState(data || null);
+	const [album, setAlbum] = useState(null);
 	const [coverImg, setCoverImg] = useState();
 	const { id } = useParams();
 	const navigate = useNavigate();
 	const user = useSelector((state) => state.user);
 
 	useEffect(() => {
-		if (!album) {
-			getOne(id)
-				.then((data) => {
-					setAlbum(data);
-				})
-				.catch(() => navigate('/'));
+		if (!album && albums) {
+			const myId = data ? data.id : id;
+			const newAlbum = albums.find((album) => album.id === myId);
+			if (!newAlbum) {
+				console.error(
+					`Album with id ${myId} could not be found. Redirecting home...`,
+				);
+				navigate('/');
+			}
+			setAlbum(newAlbum);
 		}
 		if (album && album.cover !== undefined) {
 			setCoverImg(decodeImage(album.cover));
 		}
-	}, [id, navigate, album]);
+	}, [id, navigate, album, albums, data]);
 
 	const handleDelete = (e) => {
 		e.preventDefault();

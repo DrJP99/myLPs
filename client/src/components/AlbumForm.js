@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { create } from '../services/albums';
 import { useNavigate } from 'react-router';
-import { getAll } from '../services/artists';
+import { useSelector } from 'react-redux';
 
 const AlbumForm = () => {
+	const allArtists = useSelector((state) => state.artists);
 	const [title, setTitle] = useState('');
 	const [artist, setArtist] = useState('');
-	const [allArtists, setAllArtists] = useState([]);
 	const [year, setYear] = useState('');
 	const [comment, setComment] = useState('');
 	const [file, setFile] = useState();
@@ -14,12 +14,10 @@ const AlbumForm = () => {
 
 	useEffect(() => {
 		// TODO: add persistent data to avoid unnecessary API calls
-		getAll().then((data) => {
-			let a = data.map((artist) => artist.name);
-			setAllArtists(a);
-			setArtist(a[0]);
-		});
-	}, []);
+		if (allArtists) {
+			setArtist(allArtists[0]);
+		}
+	}, [allArtists]);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -57,10 +55,15 @@ const AlbumForm = () => {
 					<select
 						value={artist}
 						onChange={({ target }) => setArtist(target.value)}
+						disabled={allArtists ? false : true}
 					>
-						{allArtists.map((artist, i) => (
-							<option key={artist}>{artist}</option>
-						))}
+						{allArtists !== null ? (
+							allArtists.map((artist, i) => (
+								<option key={artist.id}>{artist.name}</option>
+							))
+						) : (
+							<option>Loading...</option>
+						)}
 					</select>
 					<label htmlFor="year">Year</label>
 					<input
