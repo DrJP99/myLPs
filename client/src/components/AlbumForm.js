@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addAlbum, changeAlbum } from '../app/albumsSlice';
+import { updateArtistAlbum } from '../app/artistsSlice';
 
 const AlbumForm = () => {
 	const allArtists = useSelector((state) => state.artists);
@@ -60,6 +61,7 @@ const AlbumForm = () => {
 			update(id, newAlbum)
 				.then((data) => {
 					dispatch(changeAlbum(data));
+					dispatch(updateArtistAlbum(data));
 					navigate(`/album/${data.id}`);
 				})
 				.catch((error) => console.error(error.message));
@@ -89,7 +91,7 @@ const AlbumForm = () => {
 					<select
 						value={artist}
 						onChange={({ target }) => setArtist(target.value)}
-						disabled={allArtists ? false : true}
+						disabled={edit || !allArtists}
 					>
 						{allArtists !== null ? (
 							allArtists.map((artist, i) => (

@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, current } from '@reduxjs/toolkit';
 
 export const artistsSlice = createSlice({
 	name: 'artists',
@@ -17,9 +17,24 @@ export const artistsSlice = createSlice({
 		removeArtist: (state, action) => {
 			return state.filter((artist) => artist.id !== action.payload);
 		},
+		updateArtistAlbum: (state, action) => {
+			let updatedArtist = current(state).find(
+				(artist) => artist.id === action.payload.artist.id,
+			);
+			updatedArtist = {
+				...updatedArtist,
+				records: updatedArtist.records.map((album) =>
+					album.id === action.payload.id ? action.payload : album,
+				),
+			};
+			return state.map((artist) =>
+				artist.id === action.payload.artist.id ? updatedArtist : artist,
+			);
+		},
 	},
 });
 
-export const { setArtists, addArtist, removeArtist } = artistsSlice.actions;
+export const { setArtists, addArtist, removeArtist, updateArtistAlbum } =
+	artistsSlice.actions;
 
 export default artistsSlice.reducer;
