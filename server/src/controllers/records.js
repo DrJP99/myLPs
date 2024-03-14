@@ -62,8 +62,86 @@ recordsRouter.post('/', async (req, res) => {
 		await savedRecord.populate('artist', {
 			name: 1,
 			origin: 1,
+			portrait: 1,
 		}),
 	);
+});
+
+recordsRouter.put('/:id', async (req, res) => {
+	const { title, artist, year, genre, spotifyId, comment } = req.body;
+	const { id } = req.params;
+	let cover;
+	try {
+		cover = req.files.cover;
+	} catch {
+		cover = undefined;
+	}
+
+	const user = req.user;
+	if (!user) {
+		return res
+			.status(401)
+			.json({ error: 'token missing or invalid' })
+			.end();
+	}
+
+	const albumArtist = await Artist.findOne({ name: artist });
+	if (!albumArtist) {
+		return res.status(400).json({ error: 'Invalid artist' });
+	}
+
+	let updatedRecordInfo = {
+		title: title,
+		artist: albumArtist.id,
+		year: year,
+		genre: genre,
+		spotifyId: spotifyId,
+		comment: comment !== '' ? comment : undefined,
+	};
+
+	if (cover !== undefined) {
+		updatedRecordInfo = {
+			...updatedRecordInfo,
+			cover: await Image.compressImg(cover),
+		};
+	}
+
+	const updatedRecord = await Record.findByIdAndUpdate(
+		id,
+		{
+			...updatedRecordInfo,
+		},
+		{ new: true, runValidators: 'query' },
+	);
+
+	await updatedRecord.populate('artist', {
+		name: 1,
+		origin: 1,
+		portrait: 1,
+	});
+
+	// const previousAlbum = await Record.findById(id);
+	// console.log('previous artist:', await previousAlbum.artist);
+	// const savedRecord = await Record.findByIdAndUpdate(id, updatedRecord, {
+	// 	new: true,
+	// }).catch((e) => {
+	// 	return res.status(404).json({ error: 'record was not found' });
+	// });
+
+	// console.log(await savedRecord.body);
+
+	// if (previousArtist !== albumArtist.name) {
+	// 	const prevArt = await Artist.findById(previousArtist);
+	// 	const newRecordList = prevArt.records.filter(
+	// 		(record) => record.id !== id,
+	// 	);
+	// 	await Artist.findByIdAndUpdate(prevArt.id, { records: newRecordList });
+
+	// 	albumArtist.records = albumArtist.records.concat(await savedRecord.id);
+	// 	await albumArtist.save();
+	// }
+
+	res.json(updatedRecord);
 });
 
 recordsRouter.delete('/:id', async (req, res, next) => {

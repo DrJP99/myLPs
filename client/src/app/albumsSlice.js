@@ -12,14 +12,20 @@ export const albumsSlice = createSlice({
 			}
 		},
 		addAlbum: (state, action) => {
-			return state.push(action.payload);
+			state.push(action.payload);
+		},
+		changeAlbum: (state, action) => {
+			return state.map((album) =>
+				album.id === action.payload.id ? action.payload : album,
+			);
 		},
 		removeAlbum: (state, action) => {
-			return state.filter((album) => album.id === action.payload);
+			return state.filter((album) => album.id !== action.payload.id);
 		},
 	},
 });
 
-export const { setAlbums, addAlbum, removeAlbum } = albumsSlice.actions;
+export const { setAlbums, addAlbum, changeAlbum, removeAlbum } =
+	albumsSlice.actions;
 
 export default albumsSlice.reducer;

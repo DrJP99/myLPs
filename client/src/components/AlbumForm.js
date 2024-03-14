@@ -1,10 +1,18 @@
 import { useEffect, useState } from 'react';
-import { create } from '../services/albums';
+import { create, update } from '../services/albums';
 import { useNavigate } from 'react-router';
-import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { addAlbum, changeAlbum } from '../app/albumsSlice';
 
 const AlbumForm = () => {
 	const allArtists = useSelector((state) => state.artists);
+	const albums = useSelector((state) => state.albums);
+
+	const dispatch = useDispatch();
+
+	const [edit, setEdit] = useState(false);
+
 	const [title, setTitle] = useState('');
 	const [artist, setArtist] = useState('');
 	const [year, setYear] = useState('');
@@ -12,12 +20,21 @@ const AlbumForm = () => {
 	const [file, setFile] = useState();
 	const navigate = useNavigate();
 
+	const { id } = useParams();
+
 	useEffect(() => {
-		// TODO: add persistent data to avoid unnecessary API calls
 		if (allArtists) {
-			setArtist(allArtists[0]);
+			setArtist(allArtists[0].name);
 		}
-	}, [allArtists]);
+		if (albums && id) {
+			const album = albums.find((album) => album.id === id);
+			setEdit(true);
+			setTitle(album.title);
+			setArtist(album.artist.name);
+			setYear(album.year);
+			setComment(album.comment);
+		}
+	}, [albums, allArtists, id]);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -29,13 +46,24 @@ const AlbumForm = () => {
 			cover: file,
 		};
 
-		create(newAlbum)
-			.then((data) => {
-				navigate('/album/' + data.id);
-			})
-			.catch((error) => {
-				console.log(error.message);
-			});
+		if (!edit) {
+			create(newAlbum)
+				.then((data) => {
+					console.log(data);
+					dispatch(addAlbum(data));
+					navigate('/album/' + data.id);
+				})
+				.catch((error) => {
+					console.error(error.message);
+				});
+		} else {
+			update(id, newAlbum)
+				.then((data) => {
+					dispatch(changeAlbum(data));
+					navigate(`/album/${data.id}`);
+				})
+				.catch((error) => console.error(error.message));
+		}
 	};
 
 	const handleChangeYear = (e) => {
@@ -78,7 +106,12 @@ const AlbumForm = () => {
 						value={year}
 						onChange={handleChangeYear}
 					/>
-					<label htmlFor="cover">Cover</label>
+					<label htmlFor="cover">
+						Cover{' '}
+						{edit
+							? '(Leave this blank to keep the cover image)'
+							: ''}
+					</label>
 					<input
 						type="file"
 						name="cover"
@@ -100,7 +133,7 @@ const AlbumForm = () => {
 						type="submit"
 						onClick={handleSubmit}
 					>
-						Add album
+						{!edit ? 'Add album' : 'Save'}
 					</button>
 				</form>
 			</div>
