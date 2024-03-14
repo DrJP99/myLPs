@@ -37,12 +37,6 @@ const AlbumComponent = ({ album, openModal = false }) => {
 			<div className="card-container">
 				<div className="card">
 					<Link to={'/album/' + album.id} onClick={handleShowModal}>
-						{/* <div
-							className="image-cover"
-							style={{
-								backgroundImage: ,
-							}}
-						></div> */}
 						<img
 							src={`data:image/png;base64,${decodeImage(
 								album.cover,
