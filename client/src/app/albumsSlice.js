@@ -22,10 +22,13 @@ export const albumsSlice = createSlice({
 		removeAlbum: (state, action) => {
 			return state.filter((album) => album.id !== action.payload.id);
 		},
+		removeByArtist: (state, action) => {
+			return state.filter((album) => album.artist.id !== action.payload);
+		},
 	},
 });
 
-export const { setAlbums, addAlbum, changeAlbum, removeAlbum } =
+export const { setAlbums, addAlbum, changeAlbum, removeAlbum, removeByArtist } =
 	albumsSlice.actions;
 
 export default albumsSlice.reducer;

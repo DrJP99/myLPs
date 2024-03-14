@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
+import { addArtist } from '../app/artistsSlice';
 import { create } from '../services/artists';
 
 const ArtistForm = () => {
@@ -8,6 +10,7 @@ const ArtistForm = () => {
 	const [desc, setDesc] = useState('');
 	const [file, setFile] = useState();
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -20,6 +23,7 @@ const ArtistForm = () => {
 
 		create(newArtist)
 			.then((data) => {
+				dispatch(addArtist(data));
 				navigate('/artist/' + data.id);
 			})
 			.catch((error) => {

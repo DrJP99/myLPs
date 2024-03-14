@@ -1,5 +1,6 @@
 const artistsRouter = require('express').Router();
 const Artist = require('../models/artist');
+const Record = require('../models/record');
 const fs = require('fs');
 const Image = require('../../utils/image');
 
@@ -81,7 +82,8 @@ artistsRouter.delete('/:id', async (req, res, next) => {
 			.end();
 	}
 
-	await Artist.findByIdAndRemove(req.params.id);
+	await Record.deleteMany({ artist: req.params.id });
+	await Artist.findByIdAndDelete(req.params.id);
 	res.status(204).end();
 });
 

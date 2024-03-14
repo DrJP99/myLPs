@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router';
 import AlbumComponent from './AlbumComponent';
 import { decodeImage } from '../utils/image';
 import { Link } from 'react-router-dom';
+import { deleteOne } from '../services/artists';
+import { removeByArtist } from '../app/albumsSlice';
+import { removeArtist } from '../app/artistsSlice';
 
 const Artist = ({ data, inHome = false, handleCloseParent }) => {
 	const artists = useSelector((state) => state.artists);
 	const albums = useSelector((state) => state.albums);
+	const dispatch = useDispatch();
 
 	const { id } = useParams();
 	const [artist, setArtist] = useState(data);
@@ -16,6 +20,26 @@ const Artist = ({ data, inHome = false, handleCloseParent }) => {
 	const navigate = useNavigate();
 
 	const user = useSelector((state) => state.user);
+
+	const handleDelete = (e) => {
+		e.preventDefault();
+
+		if (
+			window.confirm(
+				`Are you sure you want to delete the artist ${artist.name}? All of their albums will also be deleted.`,
+			)
+		) {
+			deleteOne(artist.id)
+				.then(() => {
+					dispatch(removeByArtist(artist.id));
+					dispatch(removeArtist(artist.id));
+					navigate('/artists');
+				})
+				.catch((e) => {
+					console.error(e.message);
+				});
+		}
+	};
 
 	useEffect(() => {
 		if (!artist && artists) {
@@ -78,10 +102,7 @@ const Artist = ({ data, inHome = false, handleCloseParent }) => {
 			)}
 			{user && (
 				<p>
-					<button
-						className="button"
-						onClick={() => console.log('try to delete...')}
-					>
+					<button className="button" onClick={handleDelete}>
 						Delete
 					</button>
 				</p>

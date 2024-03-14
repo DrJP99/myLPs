@@ -12,10 +12,10 @@ export const artistsSlice = createSlice({
 			}
 		},
 		addArtist: (state, action) => {
-			return state.push(action.payload);
+			state.push(action.payload);
 		},
 		removeArtist: (state, action) => {
-			return state.filter((artist) => artist.id === action.payload);
+			return state.filter((artist) => artist.id !== action.payload);
 		},
 	},
 });
