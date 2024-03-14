@@ -41,6 +41,11 @@ const Artist = ({ data, inHome = false, handleCloseParent }) => {
 		}
 	};
 
+	const handleEdit = (e) => {
+		e.preventDefault();
+		navigate(`/edit/artist/${artist.id}`);
+	};
+
 	useEffect(() => {
 		if (!artist && artists) {
 			const myId = data ? data.id : id;
@@ -101,8 +106,14 @@ const Artist = ({ data, inHome = false, handleCloseParent }) => {
 				<p>Loading...</p>
 			)}
 			{user && (
-				<p>
-					<button className="button" onClick={handleDelete}>
+				<p className="flex">
+					<button className="button" onClick={handleEdit}>
+						Edit
+					</button>
+					<button
+						className="button float-right"
+						onClick={handleDelete}
+					>
 						Delete
 					</button>
 				</p>

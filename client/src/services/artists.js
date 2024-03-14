@@ -28,6 +28,17 @@ export const create = async (newObject) => {
 	return res.data;
 };
 
+export const update = async (id, newObject) => {
+	const config = {
+		headers: {
+			Authorization: getToken(),
+			'Content-Type': 'multipart/form-data',
+		},
+	};
+	const res = await axios.put(`${baseUrl}/${id}`, newObject, config);
+	return res.data;
+};
+
 export const deleteOne = async (id) => {
 	const config = {
 		headers: { Authorization: getToken() },

@@ -25,10 +25,23 @@ export const albumsSlice = createSlice({
 		removeByArtist: (state, action) => {
 			return state.filter((album) => album.artist.id !== action.payload);
 		},
+		updateAlbumArtist: (state, action) => {
+			return state.map((album) =>
+				album.artist.id === action.payload.id
+					? { ...album, artist: action.payload }
+					: { ...album },
+			);
+		},
 	},
 });
 
-export const { setAlbums, addAlbum, changeAlbum, removeAlbum, removeByArtist } =
-	albumsSlice.actions;
+export const {
+	setAlbums,
+	addAlbum,
+	changeAlbum,
+	removeAlbum,
+	removeByArtist,
+	updateAlbumArtist,
+} = albumsSlice.actions;
 
 export default albumsSlice.reducer;

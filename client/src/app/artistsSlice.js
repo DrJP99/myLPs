@@ -31,10 +31,20 @@ export const artistsSlice = createSlice({
 				artist.id === action.payload.artist.id ? updatedArtist : artist,
 			);
 		},
+		updateArtist: (state, action) => {
+			return state.map((artist) =>
+				artist.id === action.payload.id ? action.payload : artist,
+			);
+		},
 	},
 });
 
-export const { setArtists, addArtist, removeArtist, updateArtistAlbum } =
-	artistsSlice.actions;
+export const {
+	setArtists,
+	addArtist,
+	removeArtist,
+	updateArtistAlbum,
+	updateArtist,
+} = artistsSlice.actions;
 
 export default artistsSlice.reducer;

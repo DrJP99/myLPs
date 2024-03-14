@@ -15,6 +15,7 @@ const AlbumForm = () => {
 	const [edit, setEdit] = useState(false);
 
 	const [title, setTitle] = useState('');
+	const [albumTitle, setAlbumTitle] = useState(''); // static for title
 	const [artist, setArtist] = useState('');
 	const [year, setYear] = useState('');
 	const [comment, setComment] = useState('');
@@ -29,13 +30,19 @@ const AlbumForm = () => {
 		}
 		if (albums && id) {
 			const album = albums.find((album) => album.id === id);
-			setEdit(true);
-			setTitle(album.title);
-			setArtist(album.artist.name);
-			setYear(album.year);
-			setComment(album.comment);
+			if (typeof album === 'undefined') {
+				console.log('Album not found');
+				navigate('/add');
+			} else {
+				setEdit(true);
+				setTitle(album.title);
+				setAlbumTitle(album.title);
+				setArtist(album.artist.name);
+				setYear(album.year);
+				setComment(album.comment);
+			}
 		}
-	}, [albums, allArtists, id]);
+	}, [albums, allArtists, id, navigate]);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -76,7 +83,9 @@ const AlbumForm = () => {
 
 	return (
 		<div>
-			<h1 className="header-1">Add new album</h1>
+			<h1 className="header-1">
+				{edit ? `Edit ${albumTitle}` : 'Add new album'}
+			</h1>
 			<div className="form">
 				<form className="form-group">
 					<label htmlFor="title">Title</label>

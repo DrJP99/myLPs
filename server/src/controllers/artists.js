@@ -73,6 +73,52 @@ artistsRouter.post('/', async (req, res, next) => {
 	res.status(201).json(savedArtist);
 });
 
+artistsRouter.put('/:id', async (req, res, next) => {
+	const { name, origin, desc, spotifyId } = req.body;
+	const { id } = req.params;
+	let portrait;
+	try {
+		portrait = req.files.portrait;
+	} catch {
+		portrait = undefined;
+	}
+
+	const user = req.user;
+	if (!user) {
+		return res
+			.status(401)
+			.json({ error: 'token missing or invalid' })
+			.end();
+	}
+
+	let updatedArtistInfo = {
+		name,
+		origin,
+		desc,
+		spotifyId,
+	};
+
+	if (portrait !== undefined) {
+		updatedArtistInfo = {
+			...updatedArtistInfo,
+			portrait: await Image.compressImg(portrait),
+		};
+	}
+
+	const updatedArtist = await Artist.findByIdAndUpdate(
+		id,
+		{ ...updatedArtistInfo },
+		{ new: true, runValidators: 'query' },
+	);
+	await updatedArtist.populate('records', {
+		title: 1,
+		year: 1,
+		genre: 1,
+		cover: 1,
+	});
+	res.json(updatedArtist);
+});
+
 artistsRouter.delete('/:id', async (req, res, next) => {
 	const user = req.user;
 	if (!user) {

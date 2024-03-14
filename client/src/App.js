@@ -53,9 +53,12 @@ function App() {
 					<Route path="/add/album" element={<AlbumForm />} />
 					<Route path="/edit/album/:id" element={<AlbumForm />} />
 					<Route path="/add" element={<Navigate to="/add/album" />} />
-					<Route path="/add/artist" element={<ArtistForm />} />
+
 					<Route path="/artists" element={<Artists />} />
 					<Route path="/artist/:id" element={<Artist />} />
+					<Route path="/add/artist" element={<ArtistForm />} />
+					<Route path="/edit/artist/:id" element={<ArtistForm />} />
+
 					<Route path="/admin" element={<Admin />} />
 					<Route path="/about" element={<About />} />
 					<Route path="*" element={<Navigate to="/" />} />

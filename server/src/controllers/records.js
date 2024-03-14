@@ -120,27 +120,6 @@ recordsRouter.put('/:id', async (req, res) => {
 		portrait: 1,
 	});
 
-	// const previousAlbum = await Record.findById(id);
-	// console.log('previous artist:', await previousAlbum.artist);
-	// const savedRecord = await Record.findByIdAndUpdate(id, updatedRecord, {
-	// 	new: true,
-	// }).catch((e) => {
-	// 	return res.status(404).json({ error: 'record was not found' });
-	// });
-
-	// console.log(await savedRecord.body);
-
-	// if (previousArtist !== albumArtist.name) {
-	// 	const prevArt = await Artist.findById(previousArtist);
-	// 	const newRecordList = prevArt.records.filter(
-	// 		(record) => record.id !== id,
-	// 	);
-	// 	await Artist.findByIdAndUpdate(prevArt.id, { records: newRecordList });
-
-	// 	albumArtist.records = albumArtist.records.concat(await savedRecord.id);
-	// 	await albumArtist.save();
-	// }
-
 	res.json(updatedRecord);
 });
 
