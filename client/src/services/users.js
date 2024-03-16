@@ -1,5 +1,7 @@
 import axios from 'axios';
-const baseUrl = '/api/users';
+import { serverUrl } from '../utils/url';
+
+const baseUrl = `${serverUrl}/api/users`;
 
 let token = null;
 

@@ -1,0 +1,52 @@
+# fly.toml app configuration file generated for mylps-dark-snowflake-2571 on 2024-03-14T18:31:15-06:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'mylps-dark-snowflake-2571'
+primary_region = 'gdl'
+
+[env]
+  PORT = "3003"
+  REACT_APP_SERVER_URL="0.0.0.0:3003"
+  CLIENT_URL="tcp://0.0.0.0:3000"
+  HOSTNAME='0.0.0.0'
+
+[processes]
+  app = 'npx serve -l tcp://0.0.0.0:3000 -s /app/client/build'
+  server = 'npm start'
+
+
+[build]
+
+[http_service]
+  internal_port = 3000
+  hostname='0.0.0.0'
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[[services]]
+  internal_port = 3000
+  processes = ['app']
+  protocol = 'tcp'
+    [[services.ports]]
+      handlers = ['tls', 'http']
+      port = 3000
+
+[[services]]
+  internal_port = 3003
+  hostname = 'app.internal'
+  processes = ['server']
+  protocol = 'tcp'
+  [[services.ports]]
+    handlers = ['tls', 'http']
+    port = 3003
+
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1

@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { getToken } from './users';
-const baseUrl = '/api/artists';
+import { serverUrl } from '../utils/url';
+
+const baseUrl = `${serverUrl}/api/artists`;
 
 export const getAll = () => {
 	const request = axios.get(baseUrl);

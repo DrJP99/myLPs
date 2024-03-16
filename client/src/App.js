@@ -61,6 +61,8 @@ function App() {
 
 					<Route path="/admin" element={<Admin />} />
 					<Route path="/about" element={<About />} />
+
+					{/* <Route path="/api/*" /> */}
 					<Route path="*" element={<Navigate to="/" />} />
 				</Routes>
 			</div>

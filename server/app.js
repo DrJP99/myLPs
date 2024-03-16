@@ -1,5 +1,24 @@
 const express = require('express');
+const cors = require('cors');
+const dotenv = require('dotenv').config();
+
 const app = express();
+app.use(
+	cors({
+		origin: '*',
+		credentials: true,
+	}),
+);
+
+app.use((req, res, next) => {
+	res.header('Access-Control-Allow-Origin', '*');
+	res.header(
+		'Access-Control-Allow-Headers',
+		'Origin, X-Requested-With, Content-Type, Accept',
+	);
+	next();
+});
+
 const config = require('./utils/config');
 
 const logger = require('./utils/logger');

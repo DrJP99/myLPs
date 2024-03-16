@@ -29,12 +29,12 @@ usersRouter.post('/', async (req, res) => {
 	const { username, password } = req.body;
 
 	// Delete or comment the following lines to create a the first user
-	const user = req.user;
-	if (!user) {
-		return res.status(401).json({
-			error: 'token missing or invalid',
-		});
-	}
+	// const user = req.user;
+	// if (!user) {
+	// 	return res.status(401).json({
+	// 		error: 'token missing or invalid',
+	// 	});
+	// }
 
 	if (!password || password.length < 3) {
 		return res.status(400).json({
