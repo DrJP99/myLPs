@@ -41,7 +41,7 @@ CLIENT_URL='http://localhost:3000'
 SECRET='<your secret string, used to encode and decode tokens for the user>'
 ```
 
-To run the services in developer mode, run:
+To run the services in development mode, run:
 
 ```bash
 # myLPs/
@@ -56,7 +56,7 @@ Now go to `http://localhost:3000` on your browser and you should see the app run
 Go to the file `server/src/controllers/users.js` and comment or delete the following lines:
 
 ```javascript
-// /server/src/controllers/users.js
+// myLPs/server/src/controllers/users.js
 
 usersRouter.post('/', async (req, res) => {
 	const { username, password } = req.body;

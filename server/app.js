@@ -3,6 +3,7 @@ const cors = require('cors');
 const dotenv = require('dotenv').config();
 
 const app = express();
+
 app.use(
 	cors({
 		origin: '*',
@@ -10,8 +11,18 @@ app.use(
 	}),
 );
 
+console.log(cors);
+
 app.use((req, res, next) => {
-	res.header('Access-Control-Allow-Origin', '*');
+	const allowedDomains = [
+		'http://0.0.0.0:3000',
+		'https://albums.jp-dixon.com',
+		'https://mylps-dark-snowflake-2571.fly.dev/',
+	];
+	const origin = req.headers.origin;
+	if (allowedDomains.indexOf(origin) > -1) {
+		res.header('Access-Control-Allow-Origin', origin);
+	}
 	res.header(
 		'Access-Control-Allow-Headers',
 		'Origin, X-Requested-With, Content-Type, Accept',
