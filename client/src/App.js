@@ -27,6 +27,8 @@ function App() {
 	const theme = useSelector((state) => state.theme);
 
 	useEffect(() => {
+		document.title = 'My Album Collection';
+
 		dispatch(readSavedTheme());
 		readLocalStorage().then((userInfo) => {
 			if (userInfo) {

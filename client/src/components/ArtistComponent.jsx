@@ -4,7 +4,7 @@ import Modal from './Modal';
 import Artist from './Artist';
 import { decodeImage } from '../utils/image';
 
-const ArtistComponent = ({ artist, openModal = false }) => {
+const ArtistComponent = ({ artist, openModal = false, prevTitle = '' }) => {
 	const [modalShow, setModalShow] = useState(false);
 
 	const navigate = useNavigate();
@@ -28,7 +28,7 @@ const ArtistComponent = ({ artist, openModal = false }) => {
 	return (
 		<>
 			{openModal && modalShow && (
-				<Modal setDisplay={setDisplay}>
+				<Modal setDisplay={setDisplay} prevTitle={prevTitle}>
 					<Artist data={artist} inModal={true} />
 				</Modal>
 			)}

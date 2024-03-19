@@ -10,6 +10,7 @@ const Albums = () => {
 	React.useEffect(() => {
 		// TODO: add persistent data to avoid unnecessary API calls
 		setAlbumData(albums);
+		document.title = 'My albums';
 	}, [albums]);
 
 	return (
@@ -22,6 +23,7 @@ const Albums = () => {
 							album={album}
 							key={album.id}
 							openModal
+							prevTitle={document.title}
 						/>
 					))
 				) : (

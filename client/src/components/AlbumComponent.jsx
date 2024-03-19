@@ -5,7 +5,11 @@ import { useState } from 'react';
 import Album from './Album';
 import { decodeImage } from '../utils/image';
 
-const AlbumComponent = ({ album, openModal = false }) => {
+const AlbumComponent = ({
+	album,
+	openModal = false.valueOf,
+	prevTitle = '',
+}) => {
 	// The Album Component renders the basic information of an album on the Albums page
 
 	const [modalShow, setModalShow] = useState(false);
@@ -29,7 +33,7 @@ const AlbumComponent = ({ album, openModal = false }) => {
 	return (
 		<>
 			{openModal && modalShow && (
-				<Modal setDisplay={setDisplay}>
+				<Modal setDisplay={setDisplay} prevTitle={prevTitle}>
 					<Album data={album} inModal />
 				</Modal>
 			)}
