@@ -27,10 +27,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
-      
-      - name: Move to Client server
-        run: cd client
+        uses: actions/checkout@v4        
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -38,9 +35,11 @@ jobs:
           node-version: '20'
       
       - name: Install dependencies
+        working-directory: ./client
         run: npm install
 
       - name: Build app
+        working-directory: ./client
         run: npm run build
       
   deploy-fly:
