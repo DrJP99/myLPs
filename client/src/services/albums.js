@@ -5,7 +5,6 @@ import serverUrl from '../utils/url.js';
 const baseUrl = `${serverUrl}/api/records`;
 
 const getAll = async () => {
-	console.log('Base url:', baseUrl);
 	const request = axios.get(baseUrl);
 	const response = await request;
 	return response.data;

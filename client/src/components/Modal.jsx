@@ -1,13 +1,15 @@
+import { useEffect } from 'react';
+
 const Modal = ({ setDisplay, children }) => {
 	const handleCloseModal = (e) => {
 		e.preventDefault();
+		document.body.setAttribute('style', '');
 		setDisplay(false);
 	};
 
-	// window.addEventListener('keydown', (e) => {
-	// 	if (e.key === 'Escape') {
-	// 	}
-	// });
+	useEffect(() => {
+		document.body.setAttribute('style', `overflow: hidden`);
+	}, []);
 
 	return (
 		<div className="modal" onClick={handleCloseModal}>

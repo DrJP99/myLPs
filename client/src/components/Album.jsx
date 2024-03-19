@@ -60,6 +60,7 @@ const Album = ({ data, inHome = false, handleCloseParent }) => {
 						className="item-image album-cover"
 					/>
 				</Link>
+				{/* <div className="flex-break"></div> */}
 				<div className="item-header-titles">
 					<Link to={!inHome && `/album/${album.id}`}>
 						<h1 className="item-title">{album.title}</h1>
