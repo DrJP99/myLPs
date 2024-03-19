@@ -9,6 +9,9 @@ const Modal = ({ setDisplay, children }) => {
 
 	useEffect(() => {
 		document.body.setAttribute('style', `overflow: hidden`);
+		return () => {
+			document.body.setAttribute('style', '');
+		};
 	}, []);
 
 	return (
