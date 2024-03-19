@@ -1,5 +1,4 @@
 import { createSlice, current } from '@reduxjs/toolkit';
-import ArtistComponent from '../components/ArtistComponent';
 
 export const artistsSlice = createSlice({
 	name: 'artists',
@@ -45,7 +44,6 @@ export const artistsSlice = createSlice({
 				...updatedArtist,
 				records: [...updatedArtist.records, action.payload],
 			};
-			console.log('updated artist', updatedArtist);
 			return state.map((artist) =>
 				artist.id === action.payload.artist.id ? updatedArtist : artist,
 			);
