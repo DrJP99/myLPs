@@ -1,0 +1,61 @@
+name: FLY Deploy
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-node:
+    name: Deploy Nodejs
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+  deploy-react:
+    name: Deploy React
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Move to Client server
+        run: cd client
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build app
+        run: npm run build
+      
+  deploy-fly:
+    needs: [deploy-node, deploy-react]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@master
+        
+      - name: Fly deploy
+        run: flyctl deploy --remote-only
+        env: 
+          FLY_API_TOKEN: ${{secrets.FLY_API_TOKEN}}
+      
+

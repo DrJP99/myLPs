@@ -1,44 +1,71 @@
-import React from 'react';
-import { imagefrombuffer } from 'imagefrombuffer';
+import React, { useEffect } from 'react';
 import AlbumForm from './components/AlbumForm';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import Albums from './components/Albums';
+import Album from './components/Album';
+import NavBar from './components/NavBar';
+import ArtistForm from './components/ArtistForm';
+import Artist from './components/Artist';
+import Admin from './components/Admin';
+import { readLocalStorage } from './services/users';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearUser, setUser } from './app/userSlice';
+import { clearToken, setToken } from './app/tokenSlice';
+import Artists from './components/Artists';
+import { getAll as getAlbums } from './services/albums';
+import { getAll as getArtists } from './services/artists';
+
+import './styles/index.scss';
+import { readSavedTheme } from './app/themeSlice';
+import About from './components/About';
+import { setAlbums } from './app/albumsSlice';
+import { setArtists } from './app/artistsSlice';
 
 function App() {
-	const [albumData, setAlbumData] = React.useState([]);
+	const dispatch = useDispatch();
 
-	React.useEffect(() => {
-		fetch('/api/records')
-			.then((res) => res.json())
-			.then((data) => setAlbumData(data));
-	}, []);
+	const theme = useSelector((state) => state.theme);
 
-	const handleAddAlbum = (newAlbum) => {
-		setAlbumData(albumData.concat(newAlbum));
-	};
+	useEffect(() => {
+		dispatch(readSavedTheme());
+		readLocalStorage().then((userInfo) => {
+			if (userInfo) {
+				dispatch(setUser(userInfo.username));
+				dispatch(setToken(userInfo.token));
+			} else {
+				dispatch(clearUser());
+				dispatch(clearToken());
+			}
+		});
 
-	console.log('ALBUM DATA main', albumData);
+		getAlbums().then((data) => dispatch(setAlbums(data)));
+		getArtists().then((data) => dispatch(setArtists(data)));
+	}, [dispatch]);
+
 	return (
-		<div className="App">
-			<header className="App-header">
-				<h1>My Albums</h1>
-			</header>
-			<ul>
-				{albumData &&
-					albumData.map((album) => (
-						<li key={album.id}>
-							{album.title} - {album.year} ({album.artist.name})
-							{/* {album.cover && (
-								<img
-									src={imagefrombuffer({
-										type: album.cover?.contentType,
-										data: album.cover?.data?.data,
-									})}
-									alt={album.title}
-								/>
-							)} */}
-						</li>
-					))}
-			</ul>
-			<AlbumForm handleAddAlbum={handleAddAlbum} />
+		<div className={'app ' + theme}>
+			<NavBar />
+			<div className="app-container">
+				<Routes>
+					<Route path="/" element={<Albums />} />
+					<Route path="/album/:id" element={<Album />} />
+					<Route path="/album" element={<Navigate to="/" />} />
+					<Route path="/add/album" element={<AlbumForm />} />
+					<Route path="/edit/album/:id" element={<AlbumForm />} />
+					<Route path="/add" element={<Navigate to="/add/album" />} />
+
+					<Route path="/artists" element={<Artists />} />
+					<Route path="/artist/:id" element={<Artist />} />
+					<Route path="/add/artist" element={<ArtistForm />} />
+					<Route path="/edit/artist/:id" element={<ArtistForm />} />
+
+					<Route path="/admin" element={<Admin />} />
+					<Route path="/about" element={<About />} />
+
+					{/* <Route path="/api/*" /> */}
+					<Route path="*" element={<Navigate to="/" />} />
+				</Routes>
+			</div>
 		</div>
 	);
 }
