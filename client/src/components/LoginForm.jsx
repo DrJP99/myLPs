@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { login } from '../services/login';
 // import { setUserData } from '../services/users';
 import { setUser } from '../app/userSlice';
@@ -24,6 +24,10 @@ const LoginForm = () => {
 				console.error(err);
 			});
 	};
+
+	useEffect(() => {
+		document.title = 'Login';
+	}, []);
 
 	return (
 		<div>

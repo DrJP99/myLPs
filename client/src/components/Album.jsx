@@ -29,6 +29,7 @@ const Album = ({ data, inHome = false, handleCloseParent }) => {
 				);
 				navigate('/');
 			}
+			document.title = `${newAlbum.title}`;
 			setAlbum(newAlbum);
 		}
 		if (album && album.cover !== undefined) {

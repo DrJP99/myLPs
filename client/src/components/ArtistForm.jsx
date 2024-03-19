@@ -21,6 +21,8 @@ const ArtistForm = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
+		document.title = 'Add artist';
+
 		if (artists && id) {
 			const artist = artists.find((artist) => artist.id === id);
 			if (typeof artist === 'undefined') {
@@ -32,6 +34,7 @@ const ArtistForm = () => {
 				setArtistName(artist.name);
 				setOrigin(artist.origin);
 				setDesc(artist.desc);
+				document.title = `Edit ${artist.name}`;
 			}
 		}
 	}, [artists, id, navigate]);

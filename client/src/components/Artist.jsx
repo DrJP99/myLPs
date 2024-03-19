@@ -48,6 +48,7 @@ const Artist = ({ data, inHome = false, handleCloseParent }) => {
 
 	useEffect(() => {
 		if (!artist && artists) {
+			document.title = 'Artist';
 			const myId = data ? data.id : id;
 			const newArtist = artists.find((artist) => artist.id === myId);
 			if (!newArtist) {
@@ -66,6 +67,9 @@ const Artist = ({ data, inHome = false, handleCloseParent }) => {
 		}
 		if (artist && artist.portrait !== undefined) {
 			setPortraitImg(decodeImage(artist.portrait));
+		}
+		if (artist) {
+			document.title = artist.name;
 		}
 	}, [id, artist, artists, data, albums, navigate]);
 

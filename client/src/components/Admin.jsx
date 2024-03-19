@@ -2,6 +2,7 @@ import LoginForm from './LoginForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearUser } from '../app/userSlice';
 import { clearToken } from '../app/tokenSlice';
+import { useEffect } from 'react';
 
 const Admin = () => {
 	const user = useSelector((state) => state.user);
@@ -12,6 +13,10 @@ const Admin = () => {
 		dispatch(clearUser());
 		dispatch(clearToken());
 	};
+
+	useEffect(() => {
+		document.title = 'Admin page';
+	}, []);
 
 	return (
 		<div>

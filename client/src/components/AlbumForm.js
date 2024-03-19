@@ -25,6 +25,8 @@ const AlbumForm = () => {
 	const { id } = useParams();
 
 	useEffect(() => {
+		document.title = 'Add album';
+
 		if (allArtists) {
 			setArtist(allArtists[0].name);
 		}
@@ -40,6 +42,7 @@ const AlbumForm = () => {
 				setArtist(album.artist.name);
 				setYear(album.year);
 				setComment(album.comment);
+				document.title = `Edit ${album.title}`;
 			}
 		}
 	}, [albums, allArtists, id, navigate]);

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-const Modal = ({ setDisplay, children }) => {
+const Modal = ({ setDisplay, children, prevTitle = '' }) => {
 	const handleCloseModal = (e) => {
 		e.preventDefault();
 		document.body.setAttribute('style', '');
@@ -11,8 +11,9 @@ const Modal = ({ setDisplay, children }) => {
 		document.body.setAttribute('style', `overflow: hidden`);
 		return () => {
 			document.body.setAttribute('style', '');
+			document.title = prevTitle;
 		};
-	}, []);
+	}, [prevTitle]);
 
 	return (
 		<div className="modal" onClick={handleCloseModal}>

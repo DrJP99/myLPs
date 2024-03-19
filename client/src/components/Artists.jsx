@@ -21,6 +21,7 @@ const Artists = () => {
 	}, [artists]);
 
 	useEffect(() => {
+		document.title = 'Artists';
 		const filterList = (option) => {
 			if (artistData) {
 				setFilteredArtists(
@@ -53,6 +54,7 @@ const Artists = () => {
 							key={artist.id}
 							artist={artist}
 							openModal
+							prevTitle={document.title}
 						/>
 					))
 				) : (
