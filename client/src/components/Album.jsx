@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { decodeImage } from '../utils/image';
 import { Link } from 'react-router-dom';
 import { removeAlbum } from '../app/albumsSlice';
+import { removeArtistAlbum } from '../app/artistsSlice';
 
 const Album = ({ data, inHome = false, handleCloseParent }) => {
 	// The Album is the page that displays all the information of a single album
@@ -39,6 +40,7 @@ const Album = ({ data, inHome = false, handleCloseParent }) => {
 		e.preventDefault();
 		deleteOne(album.id).then(() => {
 			dispatch(removeAlbum(album));
+			dispatch(removeArtistAlbum(album));
 			navigate('/');
 		});
 	};
