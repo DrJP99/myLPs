@@ -63,6 +63,10 @@ const About = () => {
 				was used to handle console logging, CORS and error handling. The
 				database used was MongoDB.
 			</p>
+			<p>
+				Deployment of this website is done with the use of GitHub
+				Actions.
+			</p>
 			<h3>Contact</h3>
 			<p>You can contact me by sending an email to jpgzz1999@gmail.com</p>
 		</div>
